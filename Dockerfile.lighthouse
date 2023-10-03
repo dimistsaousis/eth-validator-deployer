@@ -31,6 +31,6 @@ CMD ["/usr/local/bin/lighthouse", "bn", \
     "--datadir", "/var/lib/lighthouse", \
     "--http", \
     "--execution-endpoint", "http://erigon:8545", \
-    "--execution-jwt", "/secrets/jwtsecret", \
+    "--execution-jwt", "ee0213800871a08b9bde05a9107e380a3693345dec9c9b20c448d9c07cd182c7", \
     "--checkpoint-sync-url", "https://prater.checkpoint.sigp.io", \
     "--metrics"]
