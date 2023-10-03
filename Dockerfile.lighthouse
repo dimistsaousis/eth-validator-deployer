@@ -16,7 +16,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy the jwtsecret file from the current directory to the container
 COPY jwtsecret /secrets/jwtsecret
 
-RUN cat /secrets/jwtsecret
+# Modify the permissions of the jwtsecret file
+RUN sudo chmod 644 /secrets/jwtsecret
 
 
 # Download and extract Lighthouse
