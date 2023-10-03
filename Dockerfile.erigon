@@ -17,11 +17,7 @@ FROM ubuntu:latest AS stage-1
 COPY --from=builder /erigon/build/bin/erigon /usr/local/bin/erigon
 
 # Create the data directory for Erigon
-RUN mkdir -p /var/lib/erigon && \
-    mkdir -p /secrets
-
-# Echo the contents of /secrets/jwtsecret (added this line)
-RUN cat /secrets/jwtsecret
+RUN mkdir -p /var/lib/erigon
 
 # Set the entrypoint to run Erigon
 ENTRYPOINT ["erigon", \
