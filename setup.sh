@@ -9,7 +9,7 @@ fi
 # Check if jwtsecret file exists, if not, create it
 if [ ! -f jwtsecret ]; then
     echo "Creating jwtsecret file..."
-    openssl rand -hex 32 | tr -d "\n" > jwtsecret
+    openssl rand -hex 32 | tr -d "\n" | sudo tee /secrets/jwtsecret
 fi
 
 # Update the package database
