@@ -20,7 +20,10 @@ COPY --from=builder /erigon/build/bin/erigon /usr/local/bin/erigon
 RUN mkdir -p /var/lib/erigon
 
 # Copy the jwtsecret file from the current directory to the container
-RUN mkdir -p secrets && echo -n $(cat jwtsecret) > /secrets/jwtsecret
+COPY jwtsecret /secrets/jwtsecret
+
+RUN cat /secrets/jwtsecret
+
 
 # Set the entrypoint to run Erigon
 ENTRYPOINT ["erigon", \
