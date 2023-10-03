@@ -30,12 +30,12 @@ RUN curl -Lo /tmp/lighthouse.tar.gz https://github.com/sigp/lighthouse/releases/
 EXPOSE 5052
 
 # Entry point for running Lighthouse
-# ENTRYPOINT ["/usr/local/bin/lighthouse", "bn", \
-#     "--network", "goerli", \
-#     "--datadir", "/var/lib/lighthouse", \
-#     "--http", \
-#     "--execution-endpoint", "http://erigon:8551", \
-#     "--execution-jwt", "/secrets/jwtsecret", \
-#     "--checkpoint-sync-url", "https://prater.checkpoint.sigp.io", \
-#     "--metrics"]
-CMD ["/bin/bash"]
+ENTRYPOINT ["/usr/local/bin/lighthouse", "bn", \
+    "--network", "goerli", \
+    "--datadir", "/var/lib/lighthouse", \
+    "--http", \
+    "--execution-endpoint", "http://erigon:8551", \
+    "--execution-jwt", "/secrets/jwtsecret", \
+    "--checkpoint-sync-url", "https://prater.checkpoint.sigp.io", \
+    "--metrics"]
+
