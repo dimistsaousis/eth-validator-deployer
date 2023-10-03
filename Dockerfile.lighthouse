@@ -13,7 +13,7 @@ RUN wget https://github.com/sigp/lighthouse/releases/download/v3.5.1/lighthouse-
 RUN mkdir -p /var/lib/lighthouse/beacon && \
     mkdir -p /secrets
 
-# Copy over the JWT secret file
+# Copy over the JWT secret file (assuming it's in the same directory as your Dockerfile)
 COPY jwtsecret /secrets/jwtsecret
 
 # Create a non-root user for running Lighthouse
