@@ -13,6 +13,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Copy the jwtsecret file from the current directory to the container
+COPY jwtsecret /secrets/jwtsecret
+
 # Download and extract Lighthouse
 RUN curl -Lo /tmp/lighthouse.tar.gz https://github.com/sigp/lighthouse/releases/download/v3.5.1/lighthouse-v3.5.1-x86_64-unknown-linux-gnu-portable.tar.gz && \
     tar -C /tmp -xvf /tmp/lighthouse.tar.gz && \
