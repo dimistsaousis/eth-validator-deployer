@@ -30,4 +30,5 @@ chmod +x /usr/local/bin/docker-compose
 docker --version
 docker-compose --version
 
-echo "Docker and Docker Compose have been installed successfully."
+echo -e "${GREEN}Docker and Docker Compose have been installed successfully.${NC}"
+
