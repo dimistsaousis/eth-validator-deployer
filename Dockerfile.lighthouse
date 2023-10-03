@@ -25,5 +25,9 @@ RUN mkdir -p /var/lib/lighthouse/beacon && \
 # Set the work directory
 WORKDIR /var/lib/lighthouse
 
+# Add the directory containing lighthouse to the PATH environment variable
+ENV PATH="/lighthouse/target/release:${PATH}"
+
+
 # Set the entrypoint to run Lighthouse
 ENTRYPOINT ["lighthouse", "bn", "--network", "goerli", "--datadir", "/var/lib/lighthouse", "--http", "--execution-endpoint", "http://erigon:8545", "--execution-jwt", "/secrets/jwtsecret", "--metrics"]
