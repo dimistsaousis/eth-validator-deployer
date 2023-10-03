@@ -23,7 +23,7 @@ RUN mkdir -p /var/lib/erigon
 COPY jwtsecret /secrets/jwtsecret
 
 # Modify the permissions of the jwtsecret file
-RUN sudo chmod 644 /secrets/jwtsecret
+RUN chmod 644 /secrets/jwtsecret
 
 # Set the entrypoint to run Erigon
 ENTRYPOINT ["erigon", \
