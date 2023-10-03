@@ -42,4 +42,3 @@ docker-compose --version
 # Build Docker Compose services
 docker-compose build
 
-echo -e "${GREEN}Docker and Docker Compose have been installed and services have been built successfully.${NC}"
