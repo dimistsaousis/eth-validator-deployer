@@ -1,34 +1,33 @@
-# Start from a base image
-FROM ubuntu:latest
+# Use the official Ubuntu as the base image
+FROM ubuntu:20.04
 
-# Install required tools including Rust, Cargo, Make, Git, and CMake
-RUN apt-get update && \
-    apt-get install -y wget tar build-essential git curl make cmake && \
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
-    export PATH="/root/.cargo/bin:${PATH}"
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Clone the Lighthouse repository
-RUN git clone https://github.com/sigp/lighthouse.git
+# Update the package database and install necessary packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    curl \
+    tar \
+    sudo \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Change into the Lighthouse directory
-WORKDIR /lighthouse
+# Download and extract Lighthouse
+RUN curl -Lo /tmp/lighthouse.tar.gz https://github.com/sigp/lighthouse/releases/download/v3.5.1/lighthouse-v3.5.1-x86_64-unknown-linux-gnu-portable.tar.gz && \
+    tar -C /tmp -xvf /tmp/lighthouse.tar.gz && \
+    mv /tmp/lighthouse /usr/local/bin && \
+    rm /tmp/lighthouse.tar.gz
 
-# Build Lighthouse
-RUN /root/.cargo/bin/cargo install --path lighthouse --force --locked \
-    --features "jemalloc" \
-    --profile "release"
+# Expose the HTTP port
+EXPOSE 5052
 
-# Create a directory to store the validator data
-RUN mkdir -p /var/lib/lighthouse/beacon && \
-    mkdir -p /secrets
-
-# Set the work directory
-WORKDIR /var/lib/lighthouse
-
-# Add the directory containing lighthouse to the PATH environment variable
-ENV PATH="/lighthouse/target/release:${PATH}"
-
-
-# Set the entrypoint to run Lighthouse
-ENTRYPOINT ["lighthouse", "bn", "--network", "goerli", "--datadir", "/var/lib/lighthouse", "--http", "--execution-endpoint", "http://erigon:8545", "--execution-jwt", "/secrets/jwtsecret", "--metrics"]
-
+# Entry point for running Lighthouse
+CMD ["/usr/local/bin/lighthouse", "bn", \
+    "--network", "goerli", \
+    "--datadir", "/var/lib/lighthouse", \
+    "--http", \
+    "--execution-endpoint", "http://localhost:8551", \
+    "--execution-jwt", "/secrets/jwtsecret", \
+    "--checkpoint-sync-url", "https://prater.checkpoint.sigp.io", \
+    "--metrics"]
