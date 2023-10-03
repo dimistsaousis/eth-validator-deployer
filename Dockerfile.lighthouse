@@ -1,3 +1,4 @@
+# Start from a base image
 FROM ubuntu:latest
 
 # Install required tools
@@ -7,31 +8,23 @@ RUN apt-get update && \
 # Download and extract Lighthouse
 RUN wget https://github.com/sigp/lighthouse/releases/download/v3.5.1/lighthouse-v3.5.1-x86_64-unknown-linux-gnu-portable.tar.gz && \
     tar -xvf lighthouse-v3.5.1-x86_64-unknown-linux-gnu-portable.tar.gz && \
-    mv lighthouse /usr/local/bin/
+    mv lighthouse /usr/local/bin/lighthouse
 
-# Create directories for Lighthouse data
+# Create a directory to store the validator data
 RUN mkdir -p /var/lib/lighthouse/beacon && \
     mkdir -p /secrets
 
-# Copy over the JWT secret file (assuming it's in the same directory as your Dockerfile)
-COPY jwtsecret /secrets/jwtsecret
-
-# Create a non-root user for running Lighthouse
-RUN useradd --no-create-home --shell /bin/false lighthousebeacon && \
-    chown -R lighthousebeacon:lighthousebeacon /var/lib/lighthouse
-
-# Switch to the non-root user
-USER lighthousebeacon
-
-# Set the working directory
+# Set the work directory
 WORKDIR /var/lib/lighthouse
 
-# Define the start command
-CMD ["lighthouse", "bn", \
-     "--network", "goerli", \
-     "--datadir", "/var/lib/lighthouse", \
-     "--http", \
-     "--execution-endpoint", "http://host.docker.internal:8551", \
-     "--execution-jwt", "/secrets/jwtsecret", \
-     "--checkpoint-sync-url", "https://prater.checkpoint.sigp.io", \
-     "--metrics"]
+# Add a non-root user and group called "lighthouse"
+RUN groupadd -r lighthouse && \
+    useradd -r -g lighthouse lighthouse && \
+    chown -R lighthouse:lighthouse /var/lib/lighthouse && \
+    chown -R lighthouse:lighthouse /secrets
+
+# Switch to the "lighthouse" user
+USER lighthouse
+
+# Set the entrypoint to run Lighthouse
+ENTRYPOINT ["lighthouse", "bn", "--network", "goerli", "--datadir", "/var/lib/lighthouse", "--http", "--execution-endpoint", "http://erigon:8545", "--execution-jwt", "/secrets/jwtsecret", "--metrics"]
