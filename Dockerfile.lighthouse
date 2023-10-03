@@ -26,8 +26,6 @@ RUN curl -Lo /tmp/lighthouse.tar.gz https://github.com/sigp/lighthouse/releases/
     mv /tmp/lighthouse /usr/local/bin && \
     rm /tmp/lighthouse.tar.gz
 
-# Expose the HTTP port
-EXPOSE 5052
 
 # Entry point for running Lighthouse
 ENTRYPOINT ["/usr/local/bin/lighthouse", "bn", \

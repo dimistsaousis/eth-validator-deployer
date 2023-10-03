@@ -32,6 +32,7 @@ ENTRYPOINT ["erigon", \
             "--metrics", \
             "--pprof", \
             "--prune", "htc", \
+            "--authrpc.port", "8551", \
             "--authrpc.jwtsecret", "/secrets/jwtsecret", \
             "--http.addr", "0.0.0.0", \
             "--http.port", "8545", \
