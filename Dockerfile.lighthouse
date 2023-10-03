@@ -1,9 +1,9 @@
 # Start from a base image
 FROM ubuntu:latest
 
-# Install required tools including Rust, Cargo, Make, and Git
+# Install required tools including Rust, Cargo, Make, Git, and CMake
 RUN apt-get update && \
-    apt-get install -y wget tar build-essential git curl make && \
+    apt-get install -y wget tar build-essential git curl make cmake && \
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
     export PATH="/root/.cargo/bin:${PATH}"
 
