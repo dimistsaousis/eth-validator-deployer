@@ -7,7 +7,6 @@ services:
       dockerfile: Dockerfile.erigon
     container_name: erigon-container
     volumes:
-      - jwtsecret-volume:/secrets
       - erigon-data:/var/lib/erigon
     ports:
       - "8545:8545"
@@ -18,7 +17,6 @@ services:
       dockerfile: Dockerfile.lighthouse
     container_name: lighthouse-container
     volumes:
-      - jwtsecret-volume:/secrets
       - lighthouse-data:/var/lib/lighthouse
     depends_on:
       - erigon
