@@ -1,9 +1,11 @@
 # Start from a base image
 FROM ubuntu:latest
 
-# Install required tools
+# Install required tools including Rust, Cargo, Make, and Git
 RUN apt-get update && \
-    apt-get install -y git curl build-essential
+    apt-get install -y wget tar build-essential git curl make && \
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
+    export PATH="/root/.cargo/bin:${PATH}"
 
 # Clone the Lighthouse repository
 RUN git clone https://github.com/sigp/lighthouse.git
@@ -12,7 +14,9 @@ RUN git clone https://github.com/sigp/lighthouse.git
 WORKDIR /lighthouse
 
 # Build Lighthouse
-RUN make
+RUN /root/.cargo/bin/cargo install --path lighthouse --force --locked \
+    --features "jemalloc" \
+    --profile "release"
 
 # Create a directory to store the validator data
 RUN mkdir -p /var/lib/lighthouse/beacon && \
