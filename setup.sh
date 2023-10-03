@@ -42,5 +42,7 @@ fi
 docker --version
 docker-compose --version
 
+docker-compose build
+
 # Remove jwtsecret
 rm jwtsecret
