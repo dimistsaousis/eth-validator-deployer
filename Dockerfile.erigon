@@ -28,7 +28,13 @@ RUN chmod 644 /secrets/jwtsecret
 # Set the entrypoint to run Erigon
 ENTRYPOINT ["erigon", \
             "--datadir", "/var/lib/erigon", \
-            "--http.addr", "0.0.0.0", \
-            "--http.api", "engine,net,eth", \
+            "--chain", "goerli", \
+            "--metrics", \
+            "--pprof", \
+            "--prune", "htc", \
             "--authrpc.jwtsecret", "/secrets/jwtsecret", \
-            "--chain", "goerli"]
+            "--externalcl", \
+            "--http.addr", "0.0.0.0", \
+            "--http.port", "8545", \
+            "--http.api", "engine,net,eth"]
+
