@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the jwtsecret file from the current directory to the container
-# COPY jwtsecret /secrets/jwtsecret
+RUN mkdir -p /secrets && echo -n $(cat jwtsecret) > /secrets/jwtsecret
 
 # Download and extract Lighthouse
 RUN curl -Lo /tmp/lighthouse.tar.gz https://github.com/sigp/lighthouse/releases/download/v3.5.1/lighthouse-v3.5.1-x86_64-unknown-linux-gnu-portable.tar.gz && \
@@ -31,6 +31,6 @@ CMD ["/usr/local/bin/lighthouse", "bn", \
     "--datadir", "/var/lib/lighthouse", \
     "--http", \
     "--execution-endpoint", "http://erigon:8545", \
-    "--execution-jwt", "ee0213800871a08b9bde05a9107e380a3693345dec9c9b20c448d9c07cd182c7", \
+    "--execution-jwt", "/secrets/jwtsecret", \
     "--checkpoint-sync-url", "https://prater.checkpoint.sigp.io", \
     "--metrics"]
