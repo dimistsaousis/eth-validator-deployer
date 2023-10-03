@@ -1,0 +1,37 @@
+FROM ubuntu:latest
+
+# Install required tools
+RUN apt-get update && \
+    apt-get install -y wget tar
+
+# Download and extract Lighthouse
+RUN wget https://github.com/sigp/lighthouse/releases/download/v3.5.1/lighthouse-v3.5.1-x86_64-unknown-linux-gnu-portable.tar.gz && \
+    tar -xvf lighthouse-v3.5.1-x86_64-unknown-linux-gnu-portable.tar.gz && \
+    mv lighthouse /usr/local/bin/
+
+# Create directories for Lighthouse data
+RUN mkdir -p /var/lib/lighthouse/beacon && \
+    mkdir -p /secrets
+
+# Copy over the JWT secret file
+COPY jwtsecret /secrets/jwtsecret
+
+# Create a non-root user for running Lighthouse
+RUN useradd --no-create-home --shell /bin/false lighthousebeacon && \
+    chown -R lighthousebeacon:lighthousebeacon /var/lib/lighthouse
+
+# Switch to the non-root user
+USER lighthousebeacon
+
+# Set the working directory
+WORKDIR /var/lib/lighthouse
+
+# Define the start command
+CMD ["lighthouse", "bn", \
+     "--network", "goerli", \
+     "--datadir", "/var/lib/lighthouse", \
+     "--http", \
+     "--execution-endpoint", "http://host.docker.internal:8551", \
+     "--execution-jwt", "/secrets/jwtsecret", \
+     "--checkpoint-sync-url", "https://prater.checkpoint.sigp.io", \
+     "--metrics"]
