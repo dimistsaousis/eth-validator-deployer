@@ -21,6 +21,5 @@ RUN mkdir -p /var/lib/erigon && \
     mkdir -p /secrets
 
 # Set the entrypoint to run Erigon
-ENTRYPOINT ["erigon", "--datadir", "/var/lib/erigon", "--http.addr", "0.0.0.0", "--http.api", "engine,net,eth", "--authrpc.jwtsecret", "25411e183fa02bd1eaf1c7d90e26e426195ee5fa68dc5db414ea6c190c5c3a77", "--chain", "goerli"]
-
+ENTRYPOINT ["erigon", "--datadir", "/var/lib/erigon", "--http.addr", "0.0.0.0", "--http.api", "engine,net,eth", "--authrpc.jwtsecret", "/secrets/jwtsecret", "--chain", "goerli"]
 
