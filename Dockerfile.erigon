@@ -30,5 +30,6 @@ ENTRYPOINT ["erigon", \
             "--datadir", "/var/lib/erigon", \
             "--http.addr", "0.0.0.0", \
             "--http.api", "engine,net,eth", \
+            "--authrpc.addr", "0.0.0.0", \
             "--authrpc.jwtsecret", "/secrets/jwtsecret", \
             "--chain", "goerli"]
