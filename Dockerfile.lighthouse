@@ -22,6 +22,9 @@ RUN curl -Lo /tmp/lighthouse.tar.gz https://github.com/sigp/lighthouse/releases/
 # Expose the HTTP port
 EXPOSE 5052
 
+# Echo the contents of /secrets/jwtsecret (added this line)
+RUN cat /secrets/jwtsecret
+
 # Entry point for running Lighthouse
 CMD ["/usr/local/bin/lighthouse", "bn", \
     "--network", "goerli", \
