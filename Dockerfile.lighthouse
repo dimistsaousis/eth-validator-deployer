@@ -30,4 +30,4 @@ ENV PATH="/lighthouse/target/release:${PATH}"
 
 
 # Set the entrypoint to run Lighthouse
-ENTRYPOINT ["lighthouse", "bn", "--network", "goerli", "--datadir", "/var/lib/lighthouse", "--http", "--execution-endpoint", "http://erigon:8545", "--execution-jwt", "/secrets/jwtsecret", "--metrics"]
+ENTRYPOINT ["lighthouse", "bn", "--network", "goerli", "--datadir", "/var/lib/lighthouse", "--http", "--execution-endpoint", "http://erigon:8545", "--execution-jwt", "25411e183fa02bd1eaf1c7d90e26e426195ee5fa68dc5db414ea6c190c5c3a77", "--metrics"]
