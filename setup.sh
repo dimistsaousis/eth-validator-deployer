@@ -10,6 +10,7 @@ fi
 if [ ! -f jwtsecret ]; then
     echo "Creating jwtsecret file..."
     openssl rand -hex 32 | tr -d "\n" | sudo tee jwtsecret
+    sudo chmod 644 /secrets/jwtsecret
 fi
 
 # Update the package database
