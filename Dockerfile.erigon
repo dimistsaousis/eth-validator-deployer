@@ -1,29 +1,27 @@
-FROM golang:1.20.1 as builder
+# Start with the official Go image to build Erigon
+FROM golang:1.20.1 AS builder
 
 # Clone the erigon repository
 RUN git clone https://github.com/ledgerwatch/erigon.git /erigon
+
+# Set the working directory to the erigon directory
 WORKDIR /erigon
 
-# Build erigon
+# Build Erigon
 RUN make erigon
 
-# Start from a fresh image to reduce the image size
-FROM ubuntu:latest
+# Start from a fresh image for the final stage
+FROM ubuntu:latest AS stage-1
 
-# Copy erigon binary from builder image
+# Copy the erigon binary from the builder image
 COPY --from=builder /erigon/build/bin/erigon /usr/local/bin/erigon
 
-# Create data directory for erigon
+# Create the data directory for Erigon
 RUN mkdir -p /var/lib/erigon && \
     chown $(whoami):$(whoami) /var/lib/erigon
 
-# Create secrets directory and generate JWT secret
-RUN mkdir -p /secrets && \
-    openssl rand -hex 32 | tr -d "\n" > /secrets/jwtsecret && \
-    chmod 644 /secrets/jwtsecret
+# Create a directory to hold the jwtsecret file
+RUN mkdir -p /secrets
 
-# Expose erigon ports
-EXPOSE 8545
-
-# Define the start command
-CMD ["erigon", "--datadir", "/var/lib/erigon", "--chain", "goerli", "--metrics", "--pprof", "--prune", "htc", "--authrpc.jwtsecret", "/secrets/jwtsecret", "--http.addr", "0.0.0.0", "--http.port", "8545", "--http.api", "engine,net,eth"]
+# Set the entrypoint to run Erigon
+ENTRYPOINT ["erigon", "--datadir", "/var/lib/erigon", "--http.addr", "0.0.0.0", "--http.api", "engine,net,eth", "--authrpc.jwtsecret", "/secrets/jwtsecret"]
