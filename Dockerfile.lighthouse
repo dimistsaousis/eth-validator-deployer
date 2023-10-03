@@ -38,3 +38,4 @@ EXPOSE 5052
 #     "--execution-jwt", "/secrets/jwtsecret", \
 #     "--checkpoint-sync-url", "https://prater.checkpoint.sigp.io", \
 #     "--metrics"]
+CMD ["/bin/bash"]
