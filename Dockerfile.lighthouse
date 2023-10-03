@@ -34,7 +34,7 @@ ENTRYPOINT ["/usr/local/bin/lighthouse", "bn", \
     "--network", "goerli", \
     "--datadir", "/var/lib/lighthouse", \
     "--http", \
-    "--execution-endpoint", "http://erigon:8551", \
+    "--execution-endpoint", "http://erigon:8554", \
     "--execution-jwt", "/secrets/jwtsecret", \
     "--checkpoint-sync-url", "https://prater.checkpoint.sigp.io", \
     "--metrics"]

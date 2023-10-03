@@ -31,7 +31,6 @@ ENTRYPOINT ["erigon", \
             "--chain", "goerli", \
             "--metrics", \
             "--pprof", \
-            "--rpc.addr", "0.0.0.0", \
             "--prune", "htc", \
             "--authrpc.jwtsecret", "/secrets/jwtsecret", \
             "--http.addr", "0.0.0.0", \
