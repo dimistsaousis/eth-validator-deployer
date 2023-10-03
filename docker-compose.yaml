@@ -20,6 +20,13 @@ services:
       - erigon-data:/var/lib/erigon
     ports:
       - "8545:8545"
+    depends_on:
+      - jwtsecret-creator
+    healthcheck:
+      test: ["CMD-SHELL", "[ -f /secrets/jwtsecret ]"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
 
   lighthouse:
     build:
@@ -30,7 +37,13 @@ services:
       - jwtsecret-volume:/secrets
       - lighthouse-data:/var/lib/lighthouse
     depends_on:
+      - jwtsecret-creator
       - erigon
+    healthcheck:
+      test: ["CMD-SHELL", "[ -f /secrets/jwtsecret ]"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
 
 volumes:
   jwtsecret-volume:
