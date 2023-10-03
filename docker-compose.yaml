@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  jwtsecret-creator:
+    image: jwtsecret-creator
+    container_name: jwtsecret-creator-container
+    volumes:
+      - jwtsecret-volume:/secrets
+    restart: "no"
+  erigon:
+    image: erigon-image
+    container_name: erigon-container
+    volumes:
+      - jwtsecret-volume:/secrets
+      - erigon-data:/var/lib/erigon
+    ports:
+      - "8545:8545"
+
+  lighthouse:
+    image: lighthouse-image
+    container_name: lighthouse-container
+    volumes:
+      - jwtsecret-volume:/secrets
+      - lighthouse-data:/var/lib/lighthouse
+    depends_on:
+      - erigon
+
+volumes:
+  jwtsecret-volume:
+  erigon-data:
+  lighthouse-data:
