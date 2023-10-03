@@ -2,13 +2,18 @@ version: "3.8"
 
 services:
   jwtsecret-creator:
-    image: jwtsecret-creator
+    build:
+      context: .
+      dockerfile: Dockerfile.jwtsecret
     container_name: jwtsecret-creator-container
     volumes:
       - jwtsecret-volume:/secrets
     restart: "no"
+
   erigon:
-    image: erigon-image
+    build:
+      context: .
+      dockerfile: Dockerfile.erigon
     container_name: erigon-container
     volumes:
       - jwtsecret-volume:/secrets
@@ -17,7 +22,9 @@ services:
       - "8545:8545"
 
   lighthouse:
-    image: lighthouse-image
+    build:
+      context: .
+      dockerfile: Dockerfile.lighthouse
     container_name: lighthouse-container
     volumes:
       - jwtsecret-volume:/secrets
