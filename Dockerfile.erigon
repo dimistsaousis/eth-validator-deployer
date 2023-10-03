@@ -18,10 +18,7 @@ COPY --from=builder /erigon/build/bin/erigon /usr/local/bin/erigon
 
 # Create the data directory for Erigon
 RUN mkdir -p /var/lib/erigon && \
-    chown $(whoami):$(whoami) /var/lib/erigon
-
-# Create a directory to hold the jwtsecret file
-RUN mkdir -p /secrets
+    mkdir -p /secrets
 
 # Set the entrypoint to run Erigon
 ENTRYPOINT ["erigon", "--datadir", "/var/lib/erigon", "--http.addr", "0.0.0.0", "--http.api", "engine,net,eth", "--authrpc.jwtsecret", "/secrets/jwtsecret"]
