@@ -6,8 +6,11 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
-# Create jwtsecrtet
-openssl rand -hex 32 | tr -d "\n" > jwtsecret
+# Check if jwtsecret file exists, if not, create it
+if [ ! -f jwtsecret ]; then
+    echo "Creating jwtsecret file..."
+    openssl rand -hex 32 | tr -d "\n" > jwtsecret
+fi
 
 # Update the package database
 apt update
@@ -39,6 +42,5 @@ fi
 docker --version
 docker-compose --version
 
-# Build Docker Compose services
-docker-compose build
-
+# Remove jwtsecret
+rm jwtsecret
