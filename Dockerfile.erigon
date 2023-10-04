@@ -1,20 +1,14 @@
-# Start with the official Go image to build Erigon
-FROM golang:1.20.1 AS builder
+# Use an official Golang runtime as a base image
+FROM golang:1.20.1
 
-# Clone the erigon repository
-RUN git clone --branch stable --single-branch https://github.com/ledgerwatch/erigon.git
+# Clone the Erigon repository
+RUN git clone --branch stable --single-branch https://github.com/ledgerwatch/erigon.git /erigon
 
-# Set the working directory to the erigon directory
+# Set the working directory in the container to /erigon
 WORKDIR /erigon
 
-# Build Erigon
+# Compile and build Erigon
 RUN make erigon
-
-# Start from a fresh image for the final stage
-FROM ubuntu:latest AS stage-1
-
-# Copy the erigon binary from the builder image
-COPY --from=builder /erigon/build/bin/erigon /usr/local/bin/erigon
 
 # Copy the jwt secret
 RUN mkdir -p /secrets
