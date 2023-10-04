@@ -2,7 +2,7 @@
 FROM golang:1.20.1 AS builder
 
 # Clone the erigon repository
-RUN git clone https://github.com/ledgerwatch/erigon.git /erigon
+RUN git clone --branch release/<x.xx> --single-branch https://github.com/ledgerwatch/erigon.git /erigon
 
 # Set the working directory to the erigon directory
 WORKDIR /erigon
