@@ -43,10 +43,10 @@ services:
       - /bin/sh
       - -c
       - |
-        if [ ! -f /secrets/jwtsecret ]; then
+        if [ ! -f /secrets/jwtsecret1 ]; then
           echo "Creating JWT secret..."
           apk --no-cache add openssl;
-          openssl rand -hex 32 | tr -d "\n" > /secrets/jwtsecret;
+          openssl rand -hex 32 | tr -d "\n" | tee > jwttoken/jwtsecret.hex;
         fi
     restart: on-failure
 
