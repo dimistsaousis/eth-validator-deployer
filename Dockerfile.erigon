@@ -1,6 +1,13 @@
 # Use the Thorax Erigon Docker image
 FROM thorax/erigon:docker_gno_devnet6
 
+# Switch to the root user
+USER root
+
+# Copy the jwt secret
+RUN mkdir -p /secrets
+COPY jwtsecret.hex /secrets/
+
 # Create the data directory for Erigon
 RUN mkdir -p /var/lib/erigon
 
