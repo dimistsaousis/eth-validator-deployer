@@ -22,5 +22,7 @@ RUN curl -Lo /tmp/lighthouse.tar.gz https://github.com/sigp/lighthouse/releases/
 
 COPY lighthouse.sh /usr/local/bin/lighthouse.sh
 
+RUN chmod +x /usr/local/bin/lighthouse.sh
+
 # Set the entry point
 ENTRYPOINT ["/usr/local/bin/lighthouse.sh"]
