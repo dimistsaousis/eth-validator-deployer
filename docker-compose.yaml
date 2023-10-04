@@ -18,6 +18,19 @@ services:
     networks:
       - eth2
 
+  lighthouse-beacon:
+    build:
+      context: .
+      dockerfile: Dockerfile.lighthousebeacon
+    container_name: lighthouse-beacon-container
+    volumes:
+      - lighthouse-data:/var/lib/lighthouse
+      - jwtsecret-volume:/secrets
+    ports:
+      - "5052:5052"
+    networks:
+      - eth2
+
   jwtsecret-generator:
     image: alpine
     container_name: jwtsecret-generator-container
