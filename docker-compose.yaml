@@ -10,11 +10,12 @@ services:
       - erigon-data:/var/lib/erigon
       # - jwtsecret-volume:/secrets
     ports:
-      - "8551:8551"
       - "8545:8545"
       - "30303:30303"
       - "30304:30304"
       - "9090:9090"
+    expose:
+      - 8551
     networks:
       - eth2
 
