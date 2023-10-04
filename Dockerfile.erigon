@@ -32,7 +32,7 @@ ENTRYPOINT ["erigon", \
             "--prune", "htc", \
             "--authrpc.port", "8551", \
             "--authrpc.addr", "0.0.0.0", \
-            "--authrpc.jwtsecret", "/secrets/jwtsecret.hex", \
+            # "--authrpc.jwtsecret", "/secrets/jwtsecret.hex", \
             "--http.addr", "0.0.0.0", \
             "--http.port", "8545", \
             "--http.api", "engine,net,eth"]
