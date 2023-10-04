@@ -1,9 +1,6 @@
 # Validator Dockerfile
 FROM lighthouse-base
 
-# Copy keys
-COPY /home/validator/ethereum-keys /keys
-
 # Import validator keys
 RUN /usr/local/bin/lighthouse --network goerli \
     account validator import \
