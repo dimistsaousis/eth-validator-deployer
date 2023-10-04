@@ -7,7 +7,5 @@ ENTRYPOINT ["/usr/local/bin/lighthouse", "vc", \
     "--network", "goerli", \
     "--datadir", "/var/lib/lighthouse", \
     "--suggested-fee-recipient", "0xe81a5054567C95db393751AC6194F925eDb8B3c0", \
-    "--graffiti", "Erdos", \
-    "--init-slashing-protection", \
-    "--auto-register"]
+    "--graffiti", "Erdos"]
 
