@@ -8,6 +8,10 @@ USER root
 RUN mkdir -p /secrets
 COPY jwtsecret.hex /secrets/
 
+
+RUN mkdir -p /var/lib/erigon/ee-secret && chown -R ${USER}:${USER} /var/lib/erigon && chmod -R 700 /var/lib/erigon && chmod 777 /var/lib/erigon/ee-secret
+
+
 # Create the data directory for Erigon
 RUN mkdir -p /var/lib/erigon
 
