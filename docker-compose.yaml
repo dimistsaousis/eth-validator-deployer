@@ -44,6 +44,7 @@ services:
       - -c
       - |
         if [ ! -f /secrets/jwtsecret ]; then
+          echo "Creating JWT secret..."
           apk --no-cache add openssl;
           openssl rand -hex 32 | tr -d "\n" > /secrets/jwtsecret;
         fi
