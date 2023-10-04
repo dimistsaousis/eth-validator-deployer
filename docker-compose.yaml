@@ -12,19 +12,9 @@ services:
     ports:
       - "8551:8551"
       - "8545:8545"
-    networks:
-      - eth2
-
-  lighthouse:
-    build:
-      context: .
-      dockerfile: Dockerfile.lighthouse
-    container_name: lighthouse-container
-    volumes:
-      - lighthouse-data:/var/lib/lighthouse
-      - jwtsecret-volume:/secrets
-    depends_on:
-      - erigon
+      - "30303:30303"
+      - "30304:30304"
+      - "9090:9090"
     networks:
       - eth2
 
