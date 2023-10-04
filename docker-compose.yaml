@@ -37,7 +37,6 @@ services:
       - erigon
     command:
       [
-        "/usr/local/bin/lighthouse",
         "--network",
         "goerli",
         "account",
