@@ -17,5 +17,4 @@ CMD ["lighthouse", "bn", \
     "--execution-jwt", "/secrets/jwtsecret.hex", \
     "--checkpoint-sync-url", "https://prater.checkpoint.sigp.io", \
     "--metrics"]
-
-
+    
