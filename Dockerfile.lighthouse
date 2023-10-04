@@ -20,9 +20,14 @@ RUN curl -Lo /tmp/lighthouse.tar.gz https://github.com/sigp/lighthouse/releases/
     mv /tmp/lighthouse /usr/local/bin && \
     rm /tmp/lighthouse.tar.gz
 
-COPY lighthouse.sh /usr/local/bin/lighthouse.sh
+# Install systemd (init system) inside the container
+RUN apt-get install -y systemd
 
-RUN chmod +x /usr/local/bin/lighthouse.sh
+# Copy service files to the container
+COPY /services/lighthousebeacon.service /etc/systemd/system/
+COPY /services/lighthousevalidator.service /etc/systemd/system/
+COPY lighthouse_start_services.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/lighthouse_start_services.sh
 
 # Set the entry point
-ENTRYPOINT ["/usr/local/bin/lighthouse.sh"]
+ENTRYPOINT ["/usr/local/bin/lighthouse_start_services.sh"]
