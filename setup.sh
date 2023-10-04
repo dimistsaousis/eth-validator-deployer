@@ -36,4 +36,8 @@ fi
 docker --version
 docker-compose --version
 
+# Build the base image
+docker build -f Dockerfile.lighthousebase -t lighthouse-base .
+
+# Now build the other images and start services with docker-compose
 docker-compose build
