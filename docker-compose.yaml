@@ -27,7 +27,10 @@ services:
       - lighthouse-data:/var/lib/lighthouse
       - jwtsecret-volume:/secrets
     ports:
-      - "5052:5052"
+      - 9000:9000
+      - 9000:9000/udp
+      - 5052:5052
+      - 5053:5053
     networks:
       - eth2
 
