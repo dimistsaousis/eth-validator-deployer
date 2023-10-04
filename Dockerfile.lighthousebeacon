@@ -14,7 +14,7 @@ CMD ["lighthouse", "bn", \
     "--datadir", "/var/lib/lighthouse", \
     "--http", \
     "--execution-endpoint", "http://erigon:8551", \
-    "--jwt-secret", "/secrets/jwtsecret.hex", \
+    "--execution-jwt", "/secrets/jwtsecret.hex", \
     "--checkpoint-sync-url", "https://prater.checkpoint.sigp.io", \
     "--metrics"]
 

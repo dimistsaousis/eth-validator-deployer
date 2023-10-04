@@ -46,7 +46,7 @@ services:
   #       if [ ! -f /secrets/jwtsecret.hex ]; then
   #         echo "Creating JWT secret..."
   #         apk --no-cache add openssl;
-  #         openssl rand -hex 32 | tr -d "\n" | tee > secrets/jwtsecret.hex;
+  #         openssl rand -hex 32 | tr -d "\n" | sudo tee jwtsecret.hex
   #       fi
   #   restart: on-failure
 
