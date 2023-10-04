@@ -10,7 +10,7 @@ CMD ["lighthouse", "bn", \
     "--datadir", "/var/lib/lighthouse", \
     "--http", \
     "--execution-endpoint", "http://erigon:8551", \
-    "--execution-jwt-secret-key", "cef5dbae878e00244a086739ee7222dd30ac29c17a12d682eb18b90cc707233b", \
+    "--execution-jwt", "/secrets/jwtsecret.hex", \
     "--checkpoint-sync-url", "https://prater.checkpoint.sigp.io", \
     "--metrics"]
 

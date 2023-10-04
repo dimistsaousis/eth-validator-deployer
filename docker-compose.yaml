@@ -43,7 +43,7 @@ services:
       - /bin/sh
       - -c
       - |
-        if [ ! -f /secrets/jwtsecret1 ]; then
+        if [ ! -f /secrets/jwtsecret.hex ]; then
           echo "Creating JWT secret..."
           apk --no-cache add openssl;
           openssl rand -hex 32 | tr -d "\n" | tee > jwttoken/jwtsecret.hex;
