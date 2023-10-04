@@ -4,10 +4,6 @@ FROM sigp/lighthouse
 # Set the working directory
 WORKDIR /var/lib/lighthouse
 
-# Copy the jwt secret
-RUN mkdir -p /secrets
-COPY jwtsecret.hex /secrets/
-
 # Command to run the Lighthouse consensus client
 CMD ["lighthouse", "bn", \
     "--network", "goerli", \
