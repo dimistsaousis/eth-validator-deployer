@@ -12,6 +12,8 @@ services:
     ports:
       - "8551:8551"
       - "8545:8545"
+    networks:
+      - eth2
 
   lighthouse-beacon:
     build:
@@ -23,6 +25,8 @@ services:
       - jwtsecret-volume:/secrets
     depends_on:
       - erigon
+    networks:
+      - eth2
 
   lighthouse-validator:
     build:
@@ -35,6 +39,8 @@ services:
       - jwtsecret-volume:/secrets
     depends_on:
       - erigon
+    networks:
+      - eth2
 
   jwtsecret-generator:
     image: alpine
@@ -55,3 +61,6 @@ volumes:
   erigon-data:
   lighthouse-data:
   jwtsecret-volume:
+
+networks:
+  eth2:
