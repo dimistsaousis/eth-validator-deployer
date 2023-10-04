@@ -1,8 +1,0 @@
-# Validator Dockerfile
-FROM lighthouse-base
-
-# Copy the validator script into the container
-COPY validator.sh /usr/local/bin/validator.sh
-
-# Set the entry point to the validator script
-ENTRYPOINT ["/usr/local/bin/validator.sh"]

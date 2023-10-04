@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     tar \
     sudo \
+    multitail \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -19,3 +20,7 @@ RUN curl -Lo /tmp/lighthouse.tar.gz https://github.com/sigp/lighthouse/releases/
     mv /tmp/lighthouse /usr/local/bin && \
     rm /tmp/lighthouse.tar.gz
 
+COPY lighthouse.sh /usr/local/bin/lighthouse.sh
+
+# Set the entry point
+ENTRYPOINT ["/usr/local/bin/lighthouse.sh"]
