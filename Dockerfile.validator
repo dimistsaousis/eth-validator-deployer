@@ -1,16 +1,10 @@
 # Validator Dockerfile
 FROM lighthouse-base
 
-# Import validator keys
-RUN /usr/local/bin/lighthouse --network goerli \
-    account validator import \
-    --directory /keys \
-    --datadir /var/lib/lighthouse
 
 # Entry point for running Lighthouse Validator
 ENTRYPOINT ["/usr/local/bin/lighthouse", "vc", \
     "--network", "goerli", \
     "--datadir", "/var/lib/lighthouse", \
     "--suggested-fee-recipient", "0xe81a5054567C95db393751AC6194F925eDb8B3c0", \
-    "--graffiti", "Erdos", \
-    ]
+    "--graffiti", "Erdos"]
