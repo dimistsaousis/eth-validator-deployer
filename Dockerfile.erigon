@@ -28,6 +28,7 @@ ENTRYPOINT ["erigon", \
             "--prune", "htc", \
             "--authrpc.port", "8551", \
             "--authrpc.addr", "0.0.0.0", \
+            "--authrpc.jwtsecret", "/secrets/jwtsecret", \
             "--http.api", "eth,erigon,engine,web3", \
             "--http.addr", "0.0.0.0", \
             "--http.port", "8545", \

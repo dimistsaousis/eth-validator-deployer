@@ -5,4 +5,13 @@ FROM sigp/lighthouse
 WORKDIR /var/lib/lighthouse
 
 # Command to run the Lighthouse consensus client
-CMD ["lighthouse", "bn", "--network", "goerli", "--datadir", "/var/lib/lighthouse", "--http", "--execution-endpoint", "http://erigon:8551", "--checkpoint-sync-url", "https://prater.checkpoint.sigp.io", "--metrics"]
+CMD ["lighthouse", "bn", \
+    "--network", "goerli", \
+    "--datadir", "/var/lib/lighthouse", \
+    "--http", \
+    "--execution-endpoint", "http://erigon:8551", \
+    "--execution-jwt-secret-key", "cef5dbae878e00244a086739ee7222dd30ac29c17a12d682eb18b90cc707233b", \
+    "--checkpoint-sync-url", "https://prater.checkpoint.sigp.io", \
+    "--metrics"]
+
+
