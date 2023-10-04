@@ -1,5 +1,5 @@
 [Unit]
-Description=Erigon Execution Layer Client service (Goerli Test Network)
+Description=Erigon Execution Layer Client service
 Wants=network-online.target
 After=network-online.target
 
@@ -19,8 +19,7 @@ ExecStart=/home/validator/erigon/build/bin/erigon \
   --authrpc.jwtsecret=/secrets/jwtsecret \
   --http.addr="0.0.0.0" \
   --http.port=8545 \
-  --http.api=engine,net,eth \
-  --http.corsdomain="http://192.168.1.168:3000"
+  --http.api=engine,net,eth
 
 
 [Install]
