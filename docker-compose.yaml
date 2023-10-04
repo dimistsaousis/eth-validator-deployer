@@ -13,17 +13,10 @@ services:
       - "8551:8551"
       - "8545:8545"
 
-  lighthouse-base:
-    build:
-      context: .
-      dockerfile: Dockerfile.lighthousebase
-    image: lighthouse-base
-
   lighthouse-beacon:
     build:
       context: .
       dockerfile: Dockerfile.beacon
-    image: lighthouse-beacon
     container_name: lighthouse-beacon-container
     volumes:
       - lighthouse-data:/var/lib/lighthouse
@@ -35,7 +28,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.validator
-    image: lighthouse-validator
     container_name: lighthouse-validator-container
     volumes:
       - lighthouse-data:/var/lib/lighthouse

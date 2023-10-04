@@ -19,5 +19,3 @@ RUN curl -Lo /tmp/lighthouse.tar.gz https://github.com/sigp/lighthouse/releases/
     mv /tmp/lighthouse /usr/local/bin && \
     rm /tmp/lighthouse.tar.gz
 
-# Create directories for Lighthouse data
-RUN mkdir -p /var/lib/lighthouse/beacon /var/lib/lighthouse/validators
