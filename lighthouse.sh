@@ -12,18 +12,21 @@ mkdir -p "$validator_dir"
 # Check if validator keys already exist
 if [ ! -f "$validator_dir/validator_keystore.json" ]; then
     echo "Validator keys do not exist. Generating..."
-    "$lighthouse_path" account validator create --network "$network" --output-dir "$validator_dir" --count 1 --password "$password"
+    "$lighthouse_path" account validator create \
+      --network "$network" \
+      --output-dir "$validator_dir" \
+      --count 1 \
+      --password "$password"
+
 fi
 
 # Start the Validator process in the background and capture its output to a log file
-"$lighthouse_path" vc \
+"$lighthouse_path" validator_client \
   --network "$network" \
   --datadir /var/lib/lighthouse \
-  --suggested-fee-recipient 0xe81a5054567C95db393751AC6194F925eDb8B3c0 \
   --graffiti "Erdos" \
-  --validators-dir "$validator_dir" \  # Specify the directory with generated keys
-  --auto-keystore \  # Automatically unlock the keystore with the provided password
-  --password "$password" \  # Provide the password for unlocking the keystore
+  --validators-dir "$validator_dir" \
+  --wallet-password "$password" \
   > /var/lib/lighthouse/validator.log 2>&1 &
 
 # Start the Beacon process and capture its output to a log file
