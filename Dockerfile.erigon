@@ -17,8 +17,8 @@ FROM ubuntu:latest AS stage-1
 COPY --from=builder /erigon/build/bin/erigon /usr/local/bin/erigon
 
 # Copy the jwt secret
-RUN mkdir -p /secrets
-COPY jwtsecret.hex /secrets/
+# RUN mkdir -p /secrets
+# COPY jwtsecret.hex /secrets/
 
 # Create the data directory for Erigon
 RUN mkdir -p /var/lib/erigon
