@@ -8,7 +8,7 @@ services:
     container_name: erigon-container
     volumes:
       - erigon-data:/var/lib/erigon
-      - jwtsecret-volume:/secrets
+      # - jwtsecret-volume:/secrets
     ports:
       - "8551:8551"
       - "8545:8545"
@@ -27,7 +27,7 @@ services:
     container_name: lighthouse-beacon-container
     volumes:
       - lighthouse-data:/var/lib/lighthouse
-      - jwtsecret-volume:/secrets
+      # - jwtsecret-volume:/secrets
     ports:
       - 9000:9000
       - 9000:9000/udp

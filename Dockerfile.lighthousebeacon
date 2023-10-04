@@ -5,8 +5,8 @@ FROM sigp/lighthouse
 WORKDIR /var/lib/lighthouse
 
 # Copy the jwt secret
-# RUN mkdir -p /secrets
-# COPY jwtsecret.hex /secrets/
+RUN mkdir -p /secrets
+COPY jwtsecret.hex /secrets/
 
 # Command to run the Lighthouse consensus client
 CMD ["lighthouse", "bn", \

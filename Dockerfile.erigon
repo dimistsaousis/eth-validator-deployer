@@ -17,8 +17,8 @@ FROM ubuntu:latest AS stage-1
 COPY --from=builder /erigon/build/bin/erigon /usr/local/bin/erigon
 
 # Copy the jwt secret
-# RUN mkdir -p /secrets
-# COPY jwtsecret.hex /secrets/
+RUN mkdir -p /secrets
+COPY jwtsecret.hex /secrets/
 
 # Create the data directory for Erigon
 RUN mkdir -p /var/lib/erigon
@@ -32,7 +32,7 @@ ENTRYPOINT ["erigon", \
             "--prune", "htc", \
             "--authrpc.port", "8551", \
             "--authrpc.addr", "0.0.0.0", \
-            # "--authrpc.jwtsecret", "/secrets/jwtsecret.hex", \
+            "--authrpc.jwtsecret", "/secrets/jwtsecret.hex", \
             "--http.addr", "0.0.0.0", \
             "--http.port", "8545", \
             "--http.api", "engine,net,eth"]
