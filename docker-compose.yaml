@@ -1,6 +1,21 @@
 version: "3.8"
 
 services:
+  jwtsecret-generator:
+    image: alpine
+    container_name: jwtsecret-generator-container
+    volumes:
+      - jwtsecret-volume:/secrets
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        echo "Creating JWT secret..."
+        apk --no-cache add openssl;
+        openssl rand -hex 32 | tr -d "\n" > /secrets/jwtsecret.hex
+        chmod 644 /secrets/jwtsecret.hex
+    restart: on-failure
+
   erigon:
     build:
       context: .
@@ -35,21 +50,6 @@ services:
       - 5053:5053
     networks:
       - eth2
-
-  jwtsecret-generator:
-    image: alpine
-    container_name: jwtsecret-generator-container
-    volumes:
-      - jwtsecret-volume:/secrets
-    entrypoint:
-      - /bin/sh
-      - -c
-      - |
-        echo "Creating JWT secret..."
-        apk --no-cache add openssl;
-        openssl rand -hex 32 | tr -d "\n" | sudo tee jwtsecret.hex
-        sudo chmod 644 /secrets/jwtsecret.hex
-    restart: on-failure
 
 volumes:
   erigon-data:
