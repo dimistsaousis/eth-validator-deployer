@@ -30,6 +30,7 @@ services:
       dockerfile: Dockerfile.validator
     container_name: lighthouse-validator-container
     volumes:
+      - "/home/validator/ethereum-keys:/keys"
       - lighthouse-data:/var/lib/lighthouse
       - jwtsecret-volume:/secrets
     depends_on:
