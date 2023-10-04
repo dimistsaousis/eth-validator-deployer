@@ -15,26 +15,12 @@ services:
     networks:
       - eth2
 
-  lighthouse-beacon:
+  lighthouse:
     build:
       context: .
-      dockerfile: Dockerfile.beacon
-    container_name: lighthouse-beacon-container
+      dockerfile: Dockerfile.lighthouse
+    container_name: lighthouse-container
     volumes:
-      - lighthouse-data:/var/lib/lighthouse
-      - jwtsecret-volume:/secrets
-    depends_on:
-      - erigon
-    networks:
-      - eth2
-
-  lighthouse-validator:
-    build:
-      context: .
-      dockerfile: Dockerfile.validator
-    container_name: lighthouse-validator-container
-    volumes:
-      - "/home/validator/ethereum-keys:/keys"
       - lighthouse-data:/var/lib/lighthouse
       - jwtsecret-volume:/secrets
     depends_on:
