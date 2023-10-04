@@ -1,16 +1,18 @@
-# Use the Thorax Erigon Docker image
-FROM thorax/erigon:docker_gno_devnet6
+# Use an official Golang runtime as a base image
+FROM golang:1.20.1
 
-# Switch to the root user
-USER root
+# Clone the Erigon repository
+RUN git clone --branch stable --single-branch https://github.com/ledgerwatch/erigon.git /erigon
+
+# Set the working directory in the container to /erigon
+WORKDIR /erigon
+
+# Compile and build Erigon
+RUN make erigon
 
 # Copy the jwt secret
 RUN mkdir -p /secrets
 COPY jwtsecret.hex /secrets/
-
-
-RUN mkdir -p /var/lib/erigon/ee-secret && chown -R ${USER}:${USER} /var/lib/erigon && chmod -R 700 /var/lib/erigon && chmod 777 /var/lib/erigon/ee-secret
-
 
 # Create the data directory for Erigon
 RUN mkdir -p /var/lib/erigon
@@ -28,3 +30,4 @@ ENTRYPOINT ["erigon", \
             "--http.addr", "0.0.0.0", \
             "--http.port", "8545", \
             "--http.api", "engine,net,eth"]
+
