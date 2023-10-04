@@ -1,0 +1,20 @@
+[Unit]
+Description=Lighthouse Consensus Client VC (Goerli Test Network)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=lighthousevalidator
+Group=lighthousevalidator
+Type=simple
+Restart=always
+RestartSec=5
+ExecStart=/usr/local/bin/lighthouse vc \
+  --network goerli \
+  --datadir /var/lib/lighthouse \
+  --suggested-fee-recipient 0xe81a5054567C95db393751AC6194F925eDb8B3c0 \
+  --graffiti "Erdos" \
+  --http-allow-origin="http://http://192.168.1.168:3000"
+
+[Install]
+WantedBy=multi-user.target

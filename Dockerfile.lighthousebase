@@ -1,4 +1,4 @@
-# Use the official Ubuntu as the base image
+# Base Dockerfile
 FROM ubuntu:20.04
 
 # Set environment variables
@@ -13,21 +13,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-
 # Download and extract Lighthouse
 RUN curl -Lo /tmp/lighthouse.tar.gz https://github.com/sigp/lighthouse/releases/download/v3.5.1/lighthouse-v3.5.1-x86_64-unknown-linux-gnu-portable.tar.gz && \
     tar -C /tmp -xvf /tmp/lighthouse.tar.gz && \
     mv /tmp/lighthouse /usr/local/bin && \
     rm /tmp/lighthouse.tar.gz
 
-
-# Entry point for running Lighthouse
-ENTRYPOINT ["/usr/local/bin/lighthouse", "bn", \
-    "--network", "goerli", \
-    "--datadir", "/var/lib/lighthouse", \
-    "--http", \
-    "--execution-endpoint", "http://erigon:8551", \
-    "--execution-jwt", "/secrets/jwtsecret", \
-    "--checkpoint-sync-url", "https://prater.checkpoint.sigp.io", \
-    "--metrics"]
-
+# Create directories for Lighthouse data
+RUN mkdir -p /var/lib/lighthouse/beacon /var/lib/lighthouse/validators

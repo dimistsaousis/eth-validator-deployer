@@ -1,0 +1,27 @@
+[Unit]
+Description=Erigon Execution Layer Client service (Goerli Test Network)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=validator
+Restart=always
+RestartSec=5
+KillSignal=SIGINT
+TimeoutStopSec=300
+ExecStart=/home/validator/erigon/build/bin/erigon \
+  --datadir /var/lib/erigon \
+  --chain goerli \
+  --metrics \
+  --pprof \
+  --prune htc \
+  --authrpc.jwtsecret=/secrets/jwtsecret \
+  --http.addr="0.0.0.0" \
+  --http.port=8545 \
+  --http.api=engine,net,eth \
+  --http.corsdomain="http://192.168.1.168:3000"
+
+
+[Install]
+WantedBy=multi-user.target

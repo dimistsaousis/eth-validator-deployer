@@ -1,0 +1,23 @@
+[Unit]
+Description=Lighthouse Consensus Client B (Goerli Test Network)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+Restart=always
+RestartSec=5
+ExecStart=/usr/local/bin/lighthouse bn \
+  --network goerli \
+  --datadir /var/lib/lighthouse \
+  --http \
+  --execution-endpoint http://localhost:8551 \
+  --execution-jwt /secrets/jwtsecret \
+  --checkpoint-sync-url https://prater.checkpoint.sigp.io \
+  --metrics
+  --http-cors-origin="http://192.168.1.168:3000"
+
+[Install]
+WantedBy=multi-user.target
