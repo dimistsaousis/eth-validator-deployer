@@ -10,10 +10,6 @@ WORKDIR /erigon
 # Compile and build Erigon
 RUN make erigon
 
-# Copy the jwt secret
-RUN mkdir -p /secrets
-COPY jwtsecret.hex /secrets/
-
 # Create the data directory for Erigon
 RUN mkdir -p /var/lib/erigon
 
