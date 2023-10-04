@@ -35,18 +35,6 @@ services:
       - jwtsecret-volume:/secrets
     depends_on:
       - erigon
-    command:
-      [
-        "--network",
-        "goerli",
-        "account",
-        "validator",
-        "import",
-        "--directory",
-        "/keys",
-        "--datadir",
-        "/var/lib/lighthouse",
-      ]
 
   jwtsecret-generator:
     image: alpine

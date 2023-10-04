@@ -1,11 +1,8 @@
 # Validator Dockerfile
 FROM lighthouse-base
 
+# Copy the validator script into the container
+COPY validator.sh /usr/local/bin/validator.sh
 
-# Entry point for running Lighthouse Validator
-ENTRYPOINT ["/usr/local/bin/lighthouse", "vc", \
-    "--network", "goerli", \
-    "--datadir", "/var/lib/lighthouse", \
-    "--suggested-fee-recipient", "0xe81a5054567C95db393751AC6194F925eDb8B3c0", \
-    "--graffiti", "Erdos"]
-
+# Set the entry point to the validator script
+ENTRYPOINT ["/usr/local/bin/validator.sh"]
