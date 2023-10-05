@@ -20,15 +20,18 @@ COPY --from=builder /erigon/build/bin/erigon /usr/local/bin/erigon
 RUN mkdir -p /var/lib/erigon
 
 # Set the entrypoint to run Erigon
-ENTRYPOINT ["erigon", \
-            "--datadir", "/var/lib/erigon", \
-            "--chain", "goerli", \
-            "--metrics", \
-            "--pprof", \
-            "--prune", "htc", \
-            "--authrpc.port", "8551", \
-            "--authrpc.addr", "0.0.0.0", \
-            "--authrpc.jwtsecret", "/secrets/jwtsecret.hex", \
-            "--http.addr", "0.0.0.0", \
-            "--http.port", "8545", \
-            "--http.api", "engine,net,eth"]
+# ENTRYPOINT ["erigon", \
+#             "--datadir", "/var/lib/erigon", \
+#             "--chain", "goerli", \
+#             "--metrics", \
+#             "--pprof", \
+#             "--prune", "htc", \
+#             "--authrpc.port", "8551", \
+#             "--authrpc.addr", "0.0.0.0", \
+#             "--authrpc.jwtsecret", "/secrets/jwtsecret.hex", \
+#             "--http.addr", "0.0.0.0", \
+#             "--http.port", "8545", \
+#             "--http.api", "engine,net,eth"]
+
+
+CMD ["tail", "-f", "/dev/null"]
