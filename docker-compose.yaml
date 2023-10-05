@@ -51,6 +51,16 @@ services:
     networks:
       - eth2
 
+  lighthouse-validator:
+    build:
+      context: .
+      dockerfile: Dockerfile.lighthousevalidator
+    container_name: lighthouse-validator-container
+    volumes:
+      - lighthouse-data:/var/lib/lighthouse
+    networks:
+      - eth2
+
 volumes:
   erigon-data:
   lighthouse-data:

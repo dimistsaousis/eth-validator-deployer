@@ -1,0 +1,14 @@
+# Use the specified base image
+FROM sigp/lighthouse
+
+# Set the working directory
+WORKDIR /var/lib/lighthouse
+
+# Command to run the Lighthouse consensus client
+# CMD ["lighthouse", "vc", \
+#     "--network", "goerli", \
+#     "--suggested-fee-recipient", "0xe81a5054567C95db393751AC6194F925eDb8B3c0", \
+#     "--graffiti", "Erdos"]
+
+
+CMD ["tail", "-f", "/dev/null"]
