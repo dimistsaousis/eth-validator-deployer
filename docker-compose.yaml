@@ -48,6 +48,8 @@ services:
       - 9000:9000/udp
       - 5052:5052
       - 5053:5053
+    expose:
+      - 5052
     networks:
       - eth2
 
