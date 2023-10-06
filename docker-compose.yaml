@@ -8,5 +8,13 @@ services:
     volumes:
       - erigon_data:/data
 
+  lighthouse:
+    build:
+      context: .
+      dockerfile: lighthouse/Dockerfile
+    volumes:
+      - lighthouse_data:/data
+
 volumes:
   erigon_data:
+  lighthouse_data:
