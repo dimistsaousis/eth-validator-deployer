@@ -10,7 +10,7 @@ services:
     image: erigon:local
     user: erigon
     volumes:
-      - erigon_data:/var/lib/erigon
+      - erigon-data:/var/lib/erigon
       - jwtsecret:/var/lib/erigon/jwtsecret
     ports:
       - 30303:30303/tcp
@@ -35,7 +35,7 @@ services:
     user: lhconsensus
     stop_grace_period: 1m
     volumes:
-      - beacon-data:/var/lib/lighthouse
+      - lighthouse-beacon-data:/var/lib/lighthouse
       - jwtsecret:/var/lib/lighthouse/beacon/jwtsecret
     ports:
       - 9000:9000/tcp
@@ -48,6 +48,6 @@ services:
 
 
 volumes:
-  beacon-data:
-  execution-data:
+  lighthouse-beacon-data:
+  erigon-data:
   jwtsecret:

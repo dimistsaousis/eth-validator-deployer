@@ -1,5 +1,4 @@
-FROM sigp/lighthouse:latest
-
+FROM sigp/lighthouse
 
 # **** CONSENSUS ****
 ARG USER=lhconsensus
@@ -15,21 +14,17 @@ RUN adduser \
     "${USER}"
 
 # Data mount with permissions:
-RUN mkdir -p /var/lib/lighthouse/beacon/ee-secret
+RUN mkdir -p /var/lib/lighthouse/beacon/jwtsecret
 # ownerhsip change
 RUN chown -R ${USER}:${USER} /var/lib/lighthouse/beacon
 # read, write, and execute (rwx) for the owner only
 RUN chmod -R 700 /var/lib/lighthouse/beacon
 # read, write, and execute (rwx) for everyone
-RUN chmod 777 /var/lib/lighthouse/beacon/ee-secret
+RUN chmod 777 /var/lib/lighthouse/beacon/jwtsecret
 
-# Copy the entrypoint and change the ownerhsip:
-COPY --chown=${USER}:${USER} ./consensus-entry.sh /usr/local/bin/
-RUN chmod -R 755 /usr/local/bin/*
+RUN chown -R ${USER}:${USER} /var/lib/lighthouse
 
 # For voluntary exit
-ENV KEYSTORE=nonesuch
-
 USER lhconsensus
 
 ENTRYPOINT ["lighthouse", "bn", \
