@@ -8,6 +8,7 @@ services:
       dockerfile: Dockerfile.erigon
     stop_grace_period: 5m
     image: erigon
+    container_name: execution-container
     user: erigon
     volumes:
       - erigon-data:/var/lib/erigon
@@ -32,6 +33,7 @@ services:
       context: .
       dockerfile: Dockerfile.lighthouseconsensus
     image: lighthouse-consensus
+    container_name: consensus-container
     user: lhconsensus
     stop_grace_period: 1m
     volumes:
@@ -52,6 +54,7 @@ services:
       context: .
       dockerfile: Dockerfile.lighthousevalidator
     image: lighthouse-validator
+    container_name: validator-container
     user: lhvalidator
     volumes:
       - lighthouse-validator-data:/var/lib/lighthouse
@@ -61,7 +64,6 @@ services:
       default:
         aliases:
           - validator
-
 
 
 volumes:
