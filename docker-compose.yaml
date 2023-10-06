@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile.erigon
     stop_grace_period: 5m
-    image: erigon:local
+    image: erigon
     user: erigon
     volumes:
       - erigon-data:/var/lib/erigon
@@ -31,7 +31,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.lighthouseconsensus
-    image: lighthouse:local
+    image: lighthouse-consensus
     user: lhconsensus
     stop_grace_period: 1m
     volumes:
@@ -45,6 +45,21 @@ services:
       default:
         aliases:
           - eth2
+
+  validator:
+    restart: "unless-stopped"
+    build:
+      context: .
+      dockerfile: Dockerfile.lighthousevalidator
+    image: lighthouse-validator
+    user: lhvalidator
+    volumes:
+      - lighthouse-beacon-data:/var/lib/lighthouse
+    networks:
+      default:
+        aliases:
+          - validator
+
 
 
 volumes:

@@ -1,14 +1,40 @@
-# Use the specified base image
-FROM sigp/lighthouse
+FROM sigp/lighthouse as builder
 
-# Set the working directory
-WORKDIR /var/lib/lighthouse
+# **** VALIDATOR ****
+ARG USER=lhvalidator
+ARG UID=10000
+# 1. Create user
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    "${USER}"
 
-# Command to run the Lighthouse consensus client
-# CMD ["lighthouse", "vc", \
-#     "--network", "goerli", \
-#     "--suggested-fee-recipient", "0xe81a5054567C95db393751AC6194F925eDb8B3c0", \
-#     "--graffiti", "Erdos"]
 
+# Create data moun
+RUN mkdir -p /var/lib/lighthouse/validators
+# ownerhsip change
+RUN chown ${USER}:${USER} /var/lib/lighthouse/validators
+# read, write, and execute (rwx) for the owner only
+RUN chmod 700 /var/lib/lighthouse/validators
 
-CMD ["tail", "-f", "/dev/null"]
+# For voluntary exit
+ENV KEYSTORE=nonesuch
+
+USER lhvalidator
+
+ENTRYPOINT ["lighthouse", "vc", \
+            "--datadir", "/var/lib/lighthouse", \
+            "--beacon-nodes", "http://consensus:5052", \
+            "--metrics", \
+            "--metrics-address", "0.0.0.0", \
+            "--metrics-port", "8009", \
+            "--http", \
+            "--http-port", "7500", \
+            "--http-address", "0.0.0.0", \
+            "--http-allow-origin=*", \
+            "--unencrypted-http-transport", \
+            "--suggested-fee-recipient", "0xe81a5054567C95db393751AC6194F925eDb8B3c0"]
