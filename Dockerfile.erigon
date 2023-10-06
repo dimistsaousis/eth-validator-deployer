@@ -1,37 +1,39 @@
-# Start with the official Go image to build Erigon
-FROM golang:1.20.1 AS builder
+FROM thorax/erigon:stable
 
-# Clone the erigon repository
-RUN git clone https://github.com/ledgerwatch/erigon.git /erigon
+ARG USER=erigon
+ARG UID=10001
+ARG GID=10002
 
-# Set the working directory to the erigon directory
-WORKDIR /erigon
-
-# Build Erigon
-RUN make erigon
-
-# Start from a fresh image for the final stage
-FROM ubuntu:latest AS stage-1
-
-# Copy the erigon binary from the builder image
-COPY --from=builder /erigon/build/bin/erigon /usr/local/bin/erigon
-
-# Create the data directory for Erigon
-RUN mkdir -p /var/lib/erigon
-
-# Set the entrypoint to run Erigon
-# ENTRYPOINT ["erigon", \
-#             "--datadir", "/var/lib/erigon", \
-#             "--chain", "goerli", \
-#             "--metrics", \
-#             "--pprof", \
-#             "--prune", "htc", \
-#             "--authrpc.port", "8551", \
-#             "--authrpc.addr", "0.0.0.0", \
-#             "--authrpc.jwtsecret", "/secrets/jwtsecret.hex", \
-#             "--http.addr", "0.0.0.0", \
-#             "--http.port", "8545", \
-#             "--http.api", "engine,net,eth"]
+USER root
+RUN apk --no-cache add shadow bash su-exec git jq && groupmod -g "${GID}" ${USER} && usermod -u "${UID}" -g "${GID}" ${USER}
+RUN mkdir -p /var/lib/erigon/jwtsecret && chown -R ${USER}:${USER} /var/lib/erigon && chmod -R 700 /var/lib/erigon && chmod 777 /var/lib/erigon/jwtsecret
+COPY --chown=${USER}:${USER} ./jwtsecret.sh /usr/local/bin/
+RUN chmod -R 755 /usr/local/bin/*
+RUN /usr/local/bin/jwtsecret.sh
+USER ${USER}
 
 
-CMD ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["erigon", \
+            "--prune", "htc", \
+            "--chain", "goerli", \
+            "--http.api", "web3,eth,net,engine", \
+            "--private.api.addr", "0.0.0.0:9090", \
+            "--datadir", "/var/lib/erigon", \
+            "--port", "30303", \
+            "--p2p.allowed-ports", "30303,30304,30305", \
+            "--torrent.port", "42069", \
+            "--nat", "any", \
+            "--metrics", \
+            "--metrics.addr", "0.0.0.0", \
+            "--http", \
+            "--http.addr", "0.0.0.0", \
+            "--http.port", "8545", \
+            "--http.vhosts=*", \
+            "--http.corsdomain=*", \
+            "--ws", \
+            "--authrpc.addr", "0.0.0.0", \
+            "--authrpc.port", "8551", \
+            "--authrpc.vhosts=*", \
+            "--authrpc.jwtsecret", "/var/lib/erigon/jwtsecret/secret", \
+            "--maxpeers", "100", \
+            "--db.pagesize", "16K"]
