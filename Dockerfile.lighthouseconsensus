@@ -28,6 +28,7 @@ RUN chown -R ${USER}:${USER} /var/lib/lighthouse
 USER lhconsensus
 
 ENTRYPOINT ["lighthouse", "bn", \
+            "--network", "goerli", \
             "--disable-upnp", \
             "--datadir", "/var/lib/lighthouse", \
             "--http", \

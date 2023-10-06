@@ -54,7 +54,9 @@ services:
     image: lighthouse-validator
     user: lhvalidator
     volumes:
-      - lighthouse-beacon-data:/var/lib/lighthouse
+      - lighthouse-validator-data:/var/lib/lighthouse
+    depends_on:
+      - consensus
     networks:
       default:
         aliases:
@@ -64,5 +66,6 @@ services:
 
 volumes:
   lighthouse-beacon-data:
+  lighthouse-validator-data:
   erigon-data:
   jwtsecret:

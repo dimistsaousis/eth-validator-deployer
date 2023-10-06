@@ -27,6 +27,7 @@ ENV KEYSTORE=nonesuch
 USER lhvalidator
 
 ENTRYPOINT ["lighthouse", "vc", \
+            "--network", "goerli", \
             "--datadir", "/var/lib/lighthouse", \
             "--beacon-nodes", "http://consensus:5052", \
             "--metrics", \
