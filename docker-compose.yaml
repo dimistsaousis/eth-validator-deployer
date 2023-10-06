@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  erigon:
+  execution:
     restart: "unless-stopped"
     build:
       context: .
@@ -26,6 +26,28 @@ services:
         aliases:
           - eth1
 
+  consensus:
+    restart: "unless-stopped"
+    build:
+      context: .
+      dockerfile: Dockerfile.lighthouseconsensus
+    image: lighthouse:local
+    user: lhconsensus
+    stop_grace_period: 1m
+    volumes:
+      - beacon-data:/var/lib/lighthouse
+      - jwtsecret:/var/lib/lighthouse/beacon/jwtsecret
+    ports:
+      - 9000:9000/tcp
+      - 9000:9000/udp
+      - 9001:9001/udp
+    networks:
+      default:
+        aliases:
+          - eth2
+
+
 volumes:
-  erigon_data:
+  beacon-data:
+  execution-data:
   jwtsecret:
