@@ -32,7 +32,7 @@ ENTRYPOINT ["lighthouse", "bn", \
             "--datadir", "/var/lib/lighthouse", \
             "--http", \
             "--http-address", "0.0.0.0", \
-            "--http-port": "5052", \
+            "--http-port", "5052", \
             "--http-allow-origin=*", \
             "--listen-address", "0.0.0.0", \
             "--port", "9000", \
@@ -44,4 +44,4 @@ ENTRYPOINT ["lighthouse", "bn", \
             "--metrics-address", "0.0.0.0", \
             "--metrics-port", "8008", \
             "--validator-monitor-auto", \
-            "--suggested-fee-recipient"]
+            "--suggested-fee-recipient", "0xe81a5054567C95db393751AC6194F925eDb8B3c0"]
