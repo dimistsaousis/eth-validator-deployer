@@ -2,19 +2,30 @@ version: "3.8"
 
 services:
   erigon:
+    restart: "unless-stopped"
     build:
       context: .
-      dockerfile: erigon/Dockerfile
+      dockerfile: Dockerfile.erigon
+    stop_grace_period: 5m
+    image: erigon:local
+    user: erigon
     volumes:
-      - erigon_data:/data
-
-  lighthouse:
-    build:
-      context: .
-      dockerfile: lighthouse/Dockerfile
-    volumes:
-      - lighthouse_data:/data
+      - erigon_data:/var/lib/erigon
+      - jwtsecret:/var/lib/erigon/jwtsecret
+    ports:
+      - 30303:30303/tcp
+      - 30303:30303/udp
+      - 30304:30304/tcp
+      - 30304:30304/udp
+      - 30305:30305/tcp
+      - 30305:30305/udp
+      - 42069:42069/tcp
+      - 42069:42069/udp
+    networks:
+      default:
+        aliases:
+          - eth1
 
 volumes:
   erigon_data:
-  lighthouse_data:
+  jwtsecret:
