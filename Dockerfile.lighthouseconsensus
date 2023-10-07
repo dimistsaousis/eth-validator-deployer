@@ -29,7 +29,7 @@ ENV KEYSTORE=nonesuch
 USER lhconsensus
 
 ENTRYPOINT ["lighthouse", "bn", \
-            "--network", "goerli", \
+            "--network", "$ETH_NETWORK", \
             "--disable-upnp", \
             "--datadir", "/var/lib/lighthouse", \
             "--http", \

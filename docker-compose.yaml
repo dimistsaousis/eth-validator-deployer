@@ -47,6 +47,8 @@ services:
       default:
         aliases:
           - eth2
+    environment:
+      - ETH_NETWORK=${ETH_NETWORK}
 
   validator:
     restart: "unless-stopped"
