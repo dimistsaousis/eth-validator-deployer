@@ -62,7 +62,7 @@ services:
       - /keymanager.sh
       - lighthouse
       - vc 
-      - --network 
+      - $ETH_NETWORK
       - goerli
       - --datadir
       - /var/lib/lighthouse 
@@ -90,6 +90,7 @@ services:
           - validator
     environment:
       - KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD}
+      - ETH_NETWORK=${ETH_NETWORK}
 
 
 volumes:
