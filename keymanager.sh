@@ -1,0 +1,1 @@
+sudo lighthouse --network goerli account validator import --directory $HOME/keys --datadir /var/lib/lighthouse
