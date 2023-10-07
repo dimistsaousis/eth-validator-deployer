@@ -23,10 +23,10 @@ COPY keymanager.sh /keymanager.sh
 RUN chmod +x /keymanager.sh
 
 # Keys
-RUN mkdir -p /keys
-RUN chown ${USER}:${USER} /keys
-RUN chmod 700 /keys
-COPY ./.eth/ethereum-keys /keys
+RUN mkdir -p /keystore
+RUN chown ${USER}:${USER} /keystore
+RUN chmod 700 /keystore
+COPY ./.eth/ethereum-keys /keystore
 
 # For voluntary exit
 ENV KEYSTORE=nonesuch
