@@ -26,6 +26,8 @@ services:
       default:
         aliases:
           - eth1
+    environment:
+      - ETH_NETWORK=${ETH_NETWORK}
 
   consensus:
     restart: "unless-stopped"
