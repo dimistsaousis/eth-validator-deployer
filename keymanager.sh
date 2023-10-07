@@ -12,5 +12,5 @@ chown lhvalidator:lhvalidator /keys/password-file
 chmod 700 keys/password-file
 
 lighthouse --network goerli account validator import --directory /keys --datadir /var/lib/lighthouse --password-file /keys/password-file --reuse-password
-
+rm -r /keys
 exec "$@"
