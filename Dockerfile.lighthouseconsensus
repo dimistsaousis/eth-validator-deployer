@@ -25,6 +25,7 @@ RUN chmod 777 /var/lib/lighthouse/beacon/jwtsecret
 RUN chown -R ${USER}:${USER} /var/lib/lighthouse
 
 # For voluntary exit
+ENV KEYSTORE=nonesuch
 USER lhconsensus
 
 ENTRYPOINT ["lighthouse", "bn", \

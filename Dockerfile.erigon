@@ -11,7 +11,7 @@ COPY --chown=${USER}:${USER} ./jwtsecret.sh /usr/local/bin/
 RUN chmod -R 755 /usr/local/bin/*
 RUN /usr/local/bin/jwtsecret.sh
 USER ${USER}
-
+ENV KEYSTORE=nonesuch
 
 ENTRYPOINT ["erigon", \
             "--prune", "htc", \
