@@ -59,6 +59,7 @@ services:
     volumes:
       - lighthouse-validator-data:/var/lib/lighthouse
       - ./.eth/ethereum-keys:/keys
+    entrypoint: ["/keymanager.sh"]
     depends_on:
       - consensus
     networks:

@@ -16,26 +16,32 @@ RUN adduser \
 
 # Create data moun
 RUN mkdir -p /var/lib/lighthouse/validators
+RUN mkdir -p /keys
 # ownerhsip change
 RUN chown ${USER}:${USER} /var/lib/lighthouse/validators
+RUN chown ${USER}:${USER} /keys
 # read, write, and execute (rwx) for the owner only
 RUN chmod 700 /var/lib/lighthouse/validators
+RUN chmod 700 /keys
+# Keymanager script
+COPY keymanager.sh /keymanager.sh
+RUN chmod +x /keymanager.sh
 
 # For voluntary exit
 ENV KEYSTORE=nonesuch
 
 USER lhvalidator
-
-ENTRYPOINT ["lighthouse", "vc", \
-            "--network", "goerli", \
-            "--datadir", "/var/lib/lighthouse", \
-            "--beacon-nodes", "http://consensus:5052", \
-            "--metrics", \
-            "--metrics-address", "0.0.0.0", \
-            "--metrics-port", "8009", \
-            "--http", \
-            "--http-port", "7500", \
-            "--http-address", "0.0.0.0", \
-            "--http-allow-origin=*", \
-            "--unencrypted-http-transport", \
-            "--suggested-fee-recipient", "0xe81a5054567C95db393751AC6194F925eDb8B3c0"]
+ENTRYPOINT ["tail", "-f", "/dev/null"]
+# ENTRYPOINT ["lighthouse", "vc", \
+#             "--network", "goerli", \
+#             "--datadir", "/var/lib/lighthouse", \
+#             "--beacon-nodes", "http://consensus:5052", \
+#             "--metrics", \
+#             "--metrics-address", "0.0.0.0", \
+#             "--metrics-port", "8009", \
+#             "--http", \
+#             "--http-port", "7500", \
+#             "--http-address", "0.0.0.0", \
+#             "--http-allow-origin=*", \
+#             "--unencrypted-http-transport", \
+#             "--suggested-fee-recipient", "0xe81a5054567C95db393751AC6194F925eDb8B3c0"]
