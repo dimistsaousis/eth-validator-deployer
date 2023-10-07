@@ -9,7 +9,7 @@ fi
 
 echo "$KEYSTORE_PASSWORD" > /keystore/password-file
 chown lhvalidator:lhvalidator /keystore/password-file
-chmod 700 keys/password-file
+chmod 700 /keystore/password-file
 
 lighthouse --network goerli account validator import --directory /keystore --datadir /var/lib/lighthouse --password-file /keystore/password-file --reuse-password
 rm -r /keystore
