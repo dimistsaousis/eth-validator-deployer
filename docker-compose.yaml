@@ -63,11 +63,10 @@ services:
     volumes:
       - lighthouse-validator-data:/var/lib/lighthouse
     entrypoint:
-      - /keymanager.sh
+      # - /keymanager.sh
       - lighthouse
       - vc 
       - $ETH_NETWORK
-      - goerli
       - --datadir
       - /var/lib/lighthouse 
       - --beacon-nodes
