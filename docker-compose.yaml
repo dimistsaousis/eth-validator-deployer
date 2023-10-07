@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.erigon
-    stop_grace_period: 5m
+    stop_grace_period: 1m
     image: erigon
     container_name: execution-container
     user: erigon
