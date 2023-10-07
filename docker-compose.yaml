@@ -60,6 +60,7 @@ services:
       - lighthouse-validator-data:/var/lib/lighthouse
       - ./.eth/ethereum-keys:/keys
     entrypoint:
+      - keymanager.sh
       - lighthouse vc 
       - --network goerli
       - --datadir /var/lib/lighthouse 
