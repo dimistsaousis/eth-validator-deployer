@@ -66,6 +66,8 @@ services:
       default:
         aliases:
           - validator
+    environment:
+      - KEYSTORE_PASSWORD=$(KEYSTORE_PASSWORD)
 
 
 volumes:
