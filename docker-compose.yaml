@@ -58,9 +58,8 @@ services:
     user: lhvalidator
     volumes:
       - lighthouse-validator-data:/var/lib/lighthouse
-      - ./.eth/ethereum-keys:/keys
     entrypoint:
-      - keymanager.sh
+      - /keymanager.sh
       - lighthouse vc 
       - --network goerli
       - --datadir /var/lib/lighthouse 
@@ -81,7 +80,7 @@ services:
         aliases:
           - validator
     environment:
-      - KEYSTORE_PASSWORD=$(KEYSTORE_PASSWORD)
+      - KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD}
 
 
 volumes:

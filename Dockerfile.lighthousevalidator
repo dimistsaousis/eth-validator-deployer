@@ -16,19 +16,27 @@ RUN adduser \
 
 # Create data moun
 RUN mkdir -p /var/lib/lighthouse/validators
-RUN mkdir -p /keys
-# ownerhsip change
 RUN chown ${USER}:${USER} /var/lib/lighthouse/validators
-RUN chown ${USER}:${USER} /keys
-# read, write, and execute (rwx) for the owner only
-RUN chmod 700 /var/lib/lighthouse/validators
-RUN chmod 700 /keys
+RUN chmod 700 /var/lib/lighthouse/validators 
 # Keymanager script
 COPY keymanager.sh /keymanager.sh
 RUN chmod +x /keymanager.sh
 
+# Keys
+RUN mkdir -p /keys
+RUN chown ${USER}:${USER} /keys
+RUN chmod 700 /keys
+COPY ./.eth/ethereum-keys /keys
+
 # For voluntary exit
 ENV KEYSTORE=nonesuch
+
+RUN set -eux; \
+        apt-get update; \
+        DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install -y gosu ca-certificates tzdata git; \
+        rm -rf /var/lib/apt/lists/*; \
+# verify that the binary works
+        gosu nobody true
 
 USER lhvalidator
 ENTRYPOINT [ "lighthouse" ]
