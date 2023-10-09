@@ -96,6 +96,13 @@ services:
       - KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD}
       - ETH_NETWORK=${ETH_NETWORK}
 
+  metrics-exporter:
+    restart: "unless-stopped"
+    build:
+      context: .
+      dockerfile: Dockerfile.metrics-exporter
+      
+
 
 volumes:
   lighthouse-beacon-data:
