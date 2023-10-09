@@ -66,6 +66,7 @@ services:
       # - /keymanager.sh
       - lighthouse
       - vc 
+      - --network
       - $ETH_NETWORK
       - --datadir
       - /var/lib/lighthouse 
