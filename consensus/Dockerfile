@@ -15,36 +15,19 @@ RUN adduser \
 
 # Data mount with permissions:
 RUN mkdir -p /var/lib/lighthouse/beacon/jwtsecret
-# ownerhsip change
 RUN chown -R ${USER}:${USER} /var/lib/lighthouse/beacon
-# read, write, and execute (rwx) for the owner only
+RUN chown -R ${USER}:${USER} /var/lib/lighthouse
 RUN chmod -R 700 /var/lib/lighthouse/beacon
-# read, write, and execute (rwx) for everyone
 RUN chmod 777 /var/lib/lighthouse/beacon/jwtsecret
 
-RUN chown -R ${USER}:${USER} /var/lib/lighthouse
+COPY entrypoint.sh /usr/local/bin/
+RUN chown -R ${USER}:${USER} /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 
 # For voluntary exit
 ENV KEYSTORE=nonesuch
 USER lhconsensus
 
-ENTRYPOINT ["lighthouse", "bn", \
-            "--network", "goerli", \
-            "--disable-upnp", \
-            "--checkpoint-sync-url", "https://prater.checkpoint.sigp.io", \
-            "--datadir", "/var/lib/lighthouse", \
-            "--http", \
-            "--http-address", "0.0.0.0", \
-            "--http-port", "5052", \
-            "--http-allow-origin=*", \
-            "--listen-address", "0.0.0.0", \
-            "--port", "9000", \
-            "--quic-port", "9001", \
-            "--target-peers", "80", \
-            "--execution-endpoint", "http://execution:8551", \
-            "--execution-jwt", "/var/lib/lighthouse/beacon/jwtsecret/secret", \
-            "--metrics", \
-            "--metrics-address", "0.0.0.0", \
-            "--metrics-port", "8008", \
-            "--validator-monitor-auto", \
-            "--suggested-fee-recipient", "0xe81a5054567C95db393751AC6194F925eDb8B3c0"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
