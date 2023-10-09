@@ -21,12 +21,19 @@ RUN chmod 700 /var/lib/lighthouse/validators
 # Keymanager script
 COPY keymanager.sh /keymanager.sh
 RUN chmod +x /keymanager.sh
+RUN chown ${USER}:${USER} /keymanager.sh
 
 # Keys
 RUN mkdir -p /keystore
 RUN chown ${USER}:${USER} /keystore
 RUN chmod 700 /keystore
 COPY ./.eth/ethereum-keys /keystore
+
+
+COPY entrypoint-validator.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint-validator.sh
+RUN chown ${USER}:${USER} /usr/local/bin/entrypoint.sh
+
 
 # For voluntary exit
 ENV KEYSTORE=nonesuch
@@ -39,4 +46,5 @@ RUN set -eux; \
         gosu nobody true
 
 USER lhvalidator
-ENTRYPOINT [ "lighthouse" ]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
