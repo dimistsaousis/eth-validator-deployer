@@ -32,8 +32,7 @@ services:
   consensus:
     restart: "unless-stopped"
     build:
-      context: .
-      dockerfile: Dockerfile.lighthouseconsensus
+      context: ./consensus
     image: lighthouse-consensus
     container_name: consensus-container
     user: lhconsensus
