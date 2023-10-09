@@ -145,10 +145,37 @@ services:
       - CRYPTOWAT_CACHESECONDS=300
       - TZ=Europe/Zurich
 
+  grafana:
+    restart: "unless-stopped"
+    build:
+      context: ./grafana
+    image: grafana
+    environment:
+      - GF_SERVER_HTTP_PORT=3000
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - grafana-config:/etc/grafana
+    entrypoint: ["provision-dashboards.sh"]
+    ports:
+      - "3000:3000"
+    command: /run.sh
 
+  prometheus:
+    restart: "unless-stopped"
+    build:
+      context: ./prometheus
+    image: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - prom-data:/prometheus
 
 volumes:
   lighthouse-beacon-data:
   lighthouse-validator-data:
   erigon-data:
   jwtsecret:
+  grafana-data:
+  grafana-config:
+  prom-data:
+
