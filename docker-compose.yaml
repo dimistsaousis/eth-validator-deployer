@@ -126,8 +126,15 @@ services:
       - ./blackbox.yml:/config/blackbox.yml
     command:
       - --config.file=/config/blackbox.yml
-      
 
+  json-exporter:
+    restart: "unless-stopped"
+    image: prometheuscommunity/json-exporter:latest
+    volumes:
+      - ./json.yml:/config/json.yml
+    command:
+      - --config.file
+      - /config/json.yml
 
 volumes:
   lighthouse-beacon-data:
