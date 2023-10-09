@@ -7,7 +7,6 @@ scrape_configs:
       - targets: ['validator:8009']
   - job_name: erigon
     metrics_path: /debug/metrics/prometheus
-    scheme: http
     static_configs:
     - targets:
       - execution:6060
@@ -22,9 +21,9 @@ scrape_configs:
   - job_name: 'cadvisor'
     static_configs:
       - targets: ['cadvisor:8080']
-  - job_name: 'ethereum-metrics-exporter'
+  - job_name: 'metrics-exporter'
     static_configs:
-      - targets: ['ethereum-metrics-exporter:9090']
+      - targets: ['metrics-exporter:9090']
   - job_name: 'cryptowat'
     scrape_interval: 300s
     static_configs:
