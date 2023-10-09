@@ -136,6 +136,15 @@ services:
       - --config.file
       - /config/json.yml
 
+  cryptowat-exporter:
+    restart: "unless-stopped"
+    image: nbarrientos/cryptowat_exporter:latest
+    environment:
+      - CRYPTOWAT_EXCHANGES=kraken
+      - CRYPTOWAT_PAIRS=etheur,ethusd,ethgbp,ethcad,ethchf,ethjpy,ethbtc
+      - CRYPTOWAT_CACHESECONDS=300
+      - TZ=Europe/Zurich
+
 volumes:
   lighthouse-beacon-data:
   lighthouse-validator-data:
