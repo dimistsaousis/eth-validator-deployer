@@ -145,8 +145,19 @@ services:
       - CRYPTOWAT_CACHESECONDS=300
       - TZ=Europe/Zurich
 
+  loki:
+    image: grafana/loki:latest
+    volumes:
+      - loki-data:/tmp
+      - ./loki:/etc/loki
+    command:
+      - '--config.file=/etc/loki/loki.yml'
+    restart: "unless-stopped"
+
+
 volumes:
   lighthouse-beacon-data:
   lighthouse-validator-data:
   erigon-data:
   jwtsecret:
+  loki-data:
