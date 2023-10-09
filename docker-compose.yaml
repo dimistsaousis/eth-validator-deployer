@@ -101,6 +101,23 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.metrics-exporter
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    command:
+      - "--path.rootfs=/host"
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--collector.filesystem.ignored-mount-points='^/(dev|proc|sys|run|var/lib/docker/.+)($|/)'"
+      - "--no-collector.ipvs"
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - "/:/host:ro,rslave"
+      - /etc/hostname:/etc/nodename:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/localtime:/etc/localtime:ro
       
 
 
