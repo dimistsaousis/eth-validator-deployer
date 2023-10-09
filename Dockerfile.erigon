@@ -15,7 +15,7 @@ ENV KEYSTORE=nonesuch
 
 ENTRYPOINT ["erigon", \
             "--prune", "htc", \
-            "--chain", "$ETH_NETWORK", \
+            "--chain", "goerli", \
             "--http.api", "web3,eth,net,engine", \
             "--private.api.addr", "0.0.0.0:9090", \
             "--datadir", "/var/lib/erigon", \

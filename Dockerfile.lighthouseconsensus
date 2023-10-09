@@ -29,8 +29,9 @@ ENV KEYSTORE=nonesuch
 USER lhconsensus
 
 ENTRYPOINT ["lighthouse", "bn", \
-            "--network", "$ETH_NETWORK", \
+            "--network", "goerli", \
             "--disable-upnp", \
+            "--checkpoint-sync-url", "https://prater.checkpoint.sigp.io", \
             "--datadir", "/var/lib/lighthouse", \
             "--http", \
             "--http-address", "0.0.0.0", \
