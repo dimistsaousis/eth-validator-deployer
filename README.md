@@ -11,8 +11,9 @@ Monitoring is provided using grafana and prometheus. MEV boosting is also suppor
 4. [Services Description](#services-description)
 5. [Deployment Instructions](#deployment-instructions)
 6. [Monitoring](#monitoring)
-7. [Support](#support)
-8. [License](#license)
+7. [MEV Boost](#mev-boost)
+8. [Support](#support)
+9. [License](#license)
 
 ## Prerequisites
 
