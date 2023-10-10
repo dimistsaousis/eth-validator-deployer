@@ -5,7 +5,7 @@ services:
     restart: "unless-stopped"
     build:
       context: ./execution
-    stop_grace_period: 1m
+    stop_grace_period: 5m
     image: erigon
     container_name: execution-container
     user: erigon
