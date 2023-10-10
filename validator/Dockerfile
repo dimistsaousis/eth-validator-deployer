@@ -30,8 +30,8 @@ RUN chmod 700 /keystore
 COPY ./.eth/ethereum-keys /keystore
 
 
-COPY entrypoint-validator.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/entrypoint-validator.sh
+COPY entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
 RUN chown ${USER}:${USER} /usr/local/bin/entrypoint.sh
 
 
