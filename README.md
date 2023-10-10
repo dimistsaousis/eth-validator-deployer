@@ -116,8 +116,6 @@ FEE_RECIPIENT=*your address here*
 6. **Access Monitoring Dashboards**:
    Access Grafana by navigating to `http://localhost:3000` on your web browser to view the monitoring dashboards and ensure the services are operating as expected.
 
-The `docker-compose up --build -d` command will build the Docker images as per the configurations provided in the `docker-compose.yaml` and respective `Dockerfile`s, and deploy the containers in a detached mode, allowing them to run in the background.
-
 In the `validator` service configuration, the `keymanager.sh` script is used to import the validator keys from the `.eth/ethereum-keys` directory. It's imperative that the validator keys are placed in this directory prior to deploying the services, and the `KEYSTORE_PASSWORD` environment variable is set correctly in the `.env` file to ensure the secure handling of these keys.
 
 ## Support
