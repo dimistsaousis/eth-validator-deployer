@@ -27,8 +27,6 @@ RUN chown ${USER}:${USER} /keymanager.sh
 RUN mkdir -p /keystore
 RUN chown ${USER}:${USER} /keystore
 RUN chmod 700 /keystore
-COPY ./.eth/ethereum-keys /keystore
-
 
 COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
