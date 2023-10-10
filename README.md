@@ -1,7 +1,8 @@
 # Ethereum Validator Deployer
 
 Streamline the deployment of an ethereum validator using docker. The validator uses erigon for the execution client and lighthouse for consensus and validator clients.
-Monitoring is provided using grafana and prometheus.
+Monitoring is provided using grafana and prometheus. 
+MEV Boosting can be enabled by providing a non-empty string of relays to the MEVBOOST_RELAYS environment variable.
 
 ## Table of Contents
 
@@ -62,6 +63,8 @@ Configure the environment variables in the `.env` file:
 KEYSTORE_PASSWORD=*your password here*
 ETH_NETWORK=*the network here*
 FEE_RECIPIENT=*your address here*
+MEVBOOST_RELAYS=*mev relays here*
+LOG_INFO=info
 ```
 
 ## Services Description
