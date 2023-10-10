@@ -104,7 +104,7 @@ services:
     restart: "unless-stopped"
     image: prom/blackbox-exporter:master
     volumes:
-      - ./blackbox.yml:/config/blackbox.yml
+      - ./configs/blackbox.yml:/config/blackbox.yml
     command:
       - --config.file=/config/blackbox.yml
 
@@ -112,7 +112,7 @@ services:
     restart: "unless-stopped"
     image: prometheuscommunity/json-exporter:latest
     volumes:
-      - ./json.yml:/config/json.yml
+      - ./configs/json.yml:/config/json.yml
     command:
       - --config.file
       - /config/json.yml
