@@ -1,67 +1,129 @@
-# Blockchain Network Setup
+# Ethereum Validator Deployer
 
-This project sets up a blockchain network using Docker Compose. It consists of multiple services including a blockchain execution engine, a consensus mechanism, and a validator. Metrics exporters and monitoring tools are also integrated.
+Streamline the deployment of an ethereum validator using docker. The validator uses erigon for the execution client and lighthouse for consensus and validator clients.
+Monitoring is provided using grafana and prometheus.
+
+## Table of Contents
+
+1. [Prerequisites](#prerequisites)
+2. [Project Structure](#project-structure)
+3. [Environment Variables](#environment-variables)
+4. [Services Description](#services-description)
+5. [Deployment Instructions](#deployment-instructions)
+6. [Monitoring](#monitoring)
+7. [Support](#support)
+8. [License](#license)
+
+## Prerequisites
+
+Ensure that you have the following installed on your machine:
+
+- Docker
+- Docker Compose
 
 ## Project Structure
 
-- `docker-compose.yml`: The main file that orchestrates all the Docker containers.
-- `Dockerfile.erigon`: Dockerfile for building the Erigon execution service.
-- `Dockerfile.lighthouseconsensus`: Dockerfile for building the Lighthouse consensus service.
-- `Dockerfile.lighthousevalidator`: Dockerfile for building the Lighthouse validator service.
-- `Dockerfile.metrics-exporter`: Dockerfile for building the metrics exporter service.
-- `jwtsecret.sh`: Script for generating JWT secrets for authentication.
-- `keymanager.sh`: Script for managing validator keys.
+```plaintext
+eth-validator-deployer/
+    docker-compose.yaml
+    README.md
+    .env
+    consensus/
+        Dockerfile
+        entrypoint.sh
+    validator/
+        Dockerfile
+        keymanager.sh
+        entrypoint.sh
+    grafana/
+        datasource.yml
+        Dockerfile
+        provision-dashboards.sh
+        dashboard.yml
+    execution/
+        jwtsecret.sh
+        Dockerfile
+        entrypoint.sh
+    configs/
+        blackbox.yml
+        json.yml
+    scripts/
+        docker-volume-size.sh
+    prometheus/
+        Dockerfile
+        prometheus.yml
+```
 
-## Getting Started
+## Environment Variables
 
-### Prerequisites
+Configure the environment variables in the `.env` file:
 
-- Docker and Docker Compose installed on your machine.
+```plaintext
+KEYSTORE_PASSWORD=*your password here*
+ETH_NETWORK=*the network here*
+FEE_RECIPIENT=*your address here*
+```
 
-### Configuration
+## Services Description
 
-1. Create a directory named `.eth` at the root of your project.
-2. Inside the `.eth` directory, create a sub-directory named `ethereum-keys` where you will place your validator keys.
-3. Update the `docker-compose.yml` file with the desired network configurations.
-4. Set the environment variables `ETH_NETWORK` and `KEYSTORE_PASSWORD` in your environment or in a `.env` file.
+- **Consensus**: Utilizes Lighthouse for consensus layer services. Configured with `--network` and `--suggested-fee-recipient` options.
+- **Validator**: Lighthouse is used for validation services. Validator keys are imported using a script, and need to be stored accordingly.
+- **Execution**: Utilizes Erigon. A JWT secret for communication between consensus and execution is auto-generated.
+- **Monitoring**: Utilizes Prometheus and Grafana to provide monitoring dashboards for various services.
+- **Data Export**: Various exporters are set up to provide metrics and data for monitoring.
 
-### Building and Running
+## Deployment Instructions
 
-1. Run `docker-compose build` to build the Docker images.
-2. Run `docker-compose up -d` to start the network.
+1. **Clone the Repository**:
 
-### Monitoring
+   ```bash
+   git clone https://github.com/dimistsaousis/eth-validator-deployer.git
+   cd eth-validator-deployer
+   ```
 
-The setup includes Prometheus and Grafana for monitoring. Access the Grafana dashboard at `http://localhost:3000`.
+2. **Update Environment Variables**:
+   Open the `.env` file with a text editor of your choice and update the environment variables `KEYSTORE_PASSWORD`, `ETH_NETWORK`, and `FEE_RECIPIENT` with your own values:
 
-## Services
+   ```plaintext
+   KEYSTORE_PASSWORD=*your password here*
+   ETH_NETWORK=*the network here*
+   FEE_RECIPIENT=*your address here*
+   ```
 
-- **Execution Service (Erigon)**:
-  - Builds and executes blockchain transactions.
-  - Exposed ports: 30303, 30304, 30305, and 42069.
+3. **Prepare Validator Keys**:
 
-- **Consensus Service (Lighthouse)**:
-  - Handles the consensus protocol.
-  - Exposed ports: 9000 and 9001.
+   - Ensure that your validator keys are present in the `.eth/ethereum-keys` directory.
+   - If the directory doesn't exist, create it:
+     ```bash
+     mkdir -p .eth/ethereum-keys
+     ```
+   - Place your validator keys in the `.eth/ethereum-keys` directory.
 
-- **Validator Service (Lighthouse)**:
-  - Manages the validator nodes in the network.
-  - Utilizes the `keymanager.sh` script to handle the copying of validator keys from the `.eth/ethereum-keys` directory to the appropriate location within the validator service container.
+4. **Build and Deploy**:
+   Now, build and deploy the Docker Compose setup with the following command:
 
-- **Metrics Exporters**:
-  - Collects and exports metrics from the blockchain network.
+   ```bash
+   docker-compose up --build -d
+   ```
 
-- **Monitoring Tools (Prometheus and Grafana)**:
-  - Provides monitoring and alerting services.
+5. **Verify Deployment**:
+   Verify that all containers are running and healthy:
 
-## Volumes
+   ```bash
+   docker-compose ps
+   ```
 
-- Data directories and configuration files are mounted as volumes to retain data across container restarts.
+6. **Access Monitoring Dashboards**:
+   Access Grafana by navigating to `http://localhost:3000` on your web browser to view the monitoring dashboards and ensure the services are operating as expected.
 
-## Contributing
+The `docker-compose up --build -d` command will build the Docker images as per the configurations provided in the `docker-compose.yaml` and respective `Dockerfile`s, and deploy the containers in a detached mode, allowing them to run in the background.
 
-If you would like to contribute to this project, please fork the repository and submit a pull request.
+In the `validator` service configuration, the `keymanager.sh` script is used to import the validator keys from the `.eth/ethereum-keys` directory. It's imperative that the validator keys are placed in this directory prior to deploying the services, and the `KEYSTORE_PASSWORD` environment variable is set correctly in the `.env` file to ensure the secure handling of these keys.
+
+## Support
+
+For any inquiries or issues regarding the setup, please open an issue in the repository or contact the maintainers.
 
 ## License
 
-This project is licensed under the MIT License.
+This project is under the MIT License.
