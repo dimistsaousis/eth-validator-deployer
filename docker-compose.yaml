@@ -52,6 +52,7 @@ services:
       - ETH_NETWORK=${ETH_NETWORK}
       - FEE_RECIPIENT=${FEE_RECIPIENT}
       - LOG_LEVEL=${LOG_LEVEL}
+      - MEVBOOST_RELAYS=${MEVBOOST_RELAYS}
 
   validator:
     restart: "unless-stopped"

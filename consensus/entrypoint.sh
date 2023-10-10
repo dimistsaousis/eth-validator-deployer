@@ -3,6 +3,7 @@ set -e  # Exit on any error
 
 : "${ETH_NETWORK:=goerli}"
 : "${FEE_RECIPIENT:=}"
+: "${MEVBOOST_RELAYS:=}" 
 
 CMD="lighthouse bn \
   --network $ETH_NETWORK \
@@ -30,6 +31,10 @@ fi
 
 if [ -n "$FEE_RECIPIENT" ]; then
     CMD="$CMD --suggested-fee-recipient $FEE_RECIPIENT"
+fi
+
+if [ -n "$MEVBOOST_RELAYS" ]; then
+    CMD="$CMD --builder http://mev-boost:18550"
 fi
 
 exec $CMD
