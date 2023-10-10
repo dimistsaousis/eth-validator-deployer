@@ -22,7 +22,7 @@ CMD="lighthouse bn \
   --metrics \
   --metrics-address 0.0.0.0 \
   --metrics-port 8008 \
-  --validator-monitor-auto \ 
+  --validator-monitor-auto \
   --debug-level $LOG_LEVEL"
 
 if [ "$ETH_NETWORK" == "goerli" ]; then
