@@ -1,5 +1,0 @@
-FROM samcm/ethereum-metrics-exporter:0.21.0-debian
-
-ENTRYPOINT ["/ethereum-metrics-exporter", \
-            "--consensus-url", "http://consensus:5052", \
-            "--execution-url", "http://execution:8545"]

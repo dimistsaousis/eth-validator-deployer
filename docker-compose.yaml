@@ -73,10 +73,16 @@ services:
       - FEE_RECIPIENT=${FEE_RECIPIENT}
 
   metrics-exporter:
+    image: samcm/ethereum-metrics-exporter:0.21.0-debian
     restart: "unless-stopped"
-    build:
-      context: .
-      dockerfile: Dockerfile.metrics-exporter
+    entrypoint:
+      - "/ethereum-metrics-exporter"
+      - "--consensus-url=http://consensus:5052"
+      - "--execution-url=http://execution:8545"
+    networks:
+      default:
+        aliases:
+          - metrics-exporter
 
   node-exporter:
     image: prom/node-exporter:latest
