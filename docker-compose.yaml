@@ -75,6 +75,7 @@ services:
       - ETH_NETWORK=${ETH_NETWORK}
       - FEE_RECIPIENT=${FEE_RECIPIENT}
       - LOG_LEVEL=${LOG_LEVEL}
+      - MEVBOOST_RELAYS=${MEVBOOST_RELAYS}
 
   metrics-exporter:
     image: samcm/ethereum-metrics-exporter:0.21.0-debian
