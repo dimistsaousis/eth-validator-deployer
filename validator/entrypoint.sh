@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e  # Exit on any error
 
+: "${ETH_NETWORK:=goerli}"
+: "${FEE_RECIPIENT:=}"
+
 # Execute the keymanager script
 /keymanager.sh
 
@@ -15,7 +18,10 @@ CMD="lighthouse vc \
   --http-port 7500 \
   --http-address 0.0.0.0 \
   --http-allow-origin=* \
-  --unencrypted-http-transport \
-  --suggested-fee-recipient 0xe81a5054567C95db393751AC6194F925eDb8B3c0"
+  --unencrypted-http-transport"
+
+if [ -n "$FEE_RECIPIENT" ]; then
+    CMD="$CMD --suggested-fee-recipient $FEE_RECIPIENT"
+fi
 
 exec $CMD

@@ -50,6 +50,7 @@ services:
           - eth2
     environment:
       - ETH_NETWORK=${ETH_NETWORK}
+      - FEE_RECIPIENT=${FEE_RECIPIENT}
 
   validator:
     restart: "unless-stopped"
@@ -69,6 +70,7 @@ services:
     environment:
       - KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD}
       - ETH_NETWORK=${ETH_NETWORK}
+      - FEE_RECIPIENT=${FEE_RECIPIENT}
 
   metrics-exporter:
     restart: "unless-stopped"
