@@ -1,10 +1,12 @@
 #!/bin/bash
 set -e  # Exit on any error
 
+: "${ETH_NETWORK:=goerli}"
+
 # Build the command with the necessary flags
 CMD="erigon \
   --prune htc \
-  --chain goerli \
+  --chain $ETH_NETWORK \
   --http.api web3,eth,net,engine \
   --private.api.addr 0.0.0.0:9090 \
   --datadir /var/lib/erigon \
