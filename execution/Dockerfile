@@ -16,4 +16,4 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 USER ${USER}
 ENV KEYSTORE=nonesuch
 
-ENTRYPOINT ["/usr/local/bin/entrypoint-erigon.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
