@@ -18,7 +18,8 @@ CMD="lighthouse vc \
   --http-port 7500 \
   --http-address 0.0.0.0 \
   --http-allow-origin=* \
-  --unencrypted-http-transport"
+  --unencrypted-http-transport \
+  --debug-level $LOG_LEVEL"
 
 if [ -n "$FEE_RECIPIENT" ]; then
     CMD="$CMD --suggested-fee-recipient $FEE_RECIPIENT"

@@ -27,6 +27,7 @@ services:
           - eth1
     environment:
       - ETH_NETWORK=${ETH_NETWORK}
+      - LOG_LEVEL=${LOG_LEVEL}
 
   consensus:
     restart: "unless-stopped"
@@ -50,6 +51,7 @@ services:
     environment:
       - ETH_NETWORK=${ETH_NETWORK}
       - FEE_RECIPIENT=${FEE_RECIPIENT}
+      - LOG_LEVEL=${LOG_LEVEL}
 
   validator:
     restart: "unless-stopped"
@@ -71,6 +73,7 @@ services:
       - KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD}
       - ETH_NETWORK=${ETH_NETWORK}
       - FEE_RECIPIENT=${FEE_RECIPIENT}
+      - LOG_LEVEL=${LOG_LEVEL}
 
   metrics-exporter:
     image: samcm/ethereum-metrics-exporter:0.21.0-debian
