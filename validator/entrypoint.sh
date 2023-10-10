@@ -27,7 +27,7 @@ if [ -n "$FEE_RECIPIENT" ]; then
 fi
 
 if [ -n "$MEVBOOST_RELAYS" ]; then
-    CMD="$CMD --builder http://mev-boost:18550"
+    CMD="$CMD --builder-proposals"
 fi
 
 exec $CMD
