@@ -155,6 +155,26 @@ services:
     volumes:
       - prom-data:/prometheus
 
+  mev-boost:
+    restart: "unless-stopped"
+    image: flashbots/mev-boost:latest
+    container_name: mevboost-container
+    ports:
+      - 18550:18550
+    networks:
+      default:
+        aliases:
+          - mevboost
+    environment:
+      - MEVBOOST_RELAYS=${MEVBOOST_RELAYS}
+      - ETH_NETWORK=${ETH_NETWORK}
+    command: >
+      -${ETH_NETWORK}
+      -addr 0.0.0.0:18550
+      -relay-check
+      -relays ${MEVBOOST_RELAYS}
+
+
 volumes:
   lighthouse-beacon-data:
   lighthouse-validator-data:
