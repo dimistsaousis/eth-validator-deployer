@@ -4,8 +4,7 @@ services:
   execution:
     restart: "unless-stopped"
     build:
-      context: .
-      dockerfile: Dockerfile.erigon
+      context: ./erigon
     stop_grace_period: 1m
     image: erigon
     container_name: execution-container
