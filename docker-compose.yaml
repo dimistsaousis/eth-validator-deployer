@@ -4,7 +4,7 @@ services:
   execution:
     restart: "unless-stopped"
     build:
-      context: ./erigon
+      context: ./execution
     stop_grace_period: 1m
     image: erigon
     container_name: execution-container
@@ -59,6 +59,7 @@ services:
     container_name: validator-container
     user: lhvalidator
     volumes:
+      - ./.eth/ethereum-keys:/keystore
       - lighthouse-validator-data:/var/lib/lighthouse
     depends_on:
       - consensus
