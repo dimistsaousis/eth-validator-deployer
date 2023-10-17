@@ -121,7 +121,6 @@ LOG_INFO=info
 
 In the `validator` service configuration, the `keymanager.sh` script is used to import the validator keys from the `.eth/ethereum-keys` directory. It's imperative that the validator keys are placed in this directory prior to deploying the services, and the `KEYSTORE_PASSWORD` environment variable is set correctly in the `.env` file to ensure the secure handling of these keys.
 
-Certainly! Below is a newly created section called **MEV Boost** that explains the MEV Boost feature, how users can add relays using the `MEVBOOST_RELAY` environment variable, and provides links to lists of relays. It also includes a brief caution note for users.
 
 ## MEV Boost
 
@@ -135,7 +134,6 @@ You can find a list of relays to use from the following resources:
 - [Ethstaker MEV relay list](https://github.com/eth-educators/ethstaker-guides/blob/main/MEV-relay-list.md)
 - [Lido on Ethereum: Call for Relay Providers](https://research.lido.fi/t/lido-on-ethereum-call-for-relay-providers/2844)
 
-MEV Boost should be used with caution. While it provides a way to capture additional revenue, it may introduce new risks or challenges to your validator setup. It's crucial to understand the implications and ensure that the relays you add are trustworthy and reliable before enabling MEV Boost in your setup.
 
 ## Support
 
