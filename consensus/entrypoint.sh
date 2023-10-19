@@ -22,8 +22,7 @@ CMD="lighthouse bn \
   --metrics \
   --metrics-address 0.0.0.0 \
   --metrics-port 8008 \
-  --validator-monitor-auto \
-  --debug-level $LOG_LEVEL"
+  --validator-monitor-auto"
 
 if [ "$ETH_NETWORK" == "goerli" ]; then
     CMD="$CMD --checkpoint-sync-url https://prater.checkpoint.sigp.io"

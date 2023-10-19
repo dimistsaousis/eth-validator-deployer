@@ -27,8 +27,7 @@ CMD="erigon \
   --authrpc.vhosts=* \
   --authrpc.jwtsecret /var/lib/erigon/jwtsecret/secret \
   --maxpeers 100 \
-  --db.pagesize 16K \
-  --debug-level $LOG_LEVEL"
+  --db.pagesize 16K"
 
 # Execute the command
 exec $CMD
