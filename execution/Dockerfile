@@ -1,4 +1,4 @@
-FROM thorax/erigon:v2.50.2
+FROM thorax/erigon:v2.54.0
 ARG USER=erigon
 ARG UID=10001
 ARG GID=10002
