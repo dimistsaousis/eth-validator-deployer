@@ -16,7 +16,7 @@ CMD="lighthouse bn \
   --listen-address 0.0.0.0 \
   --port 9000 \
   --quic-port 9001 \
-  --target-peers 80 \
+  --target-peers 150 \
   --execution-endpoint http://execution:8551 \
   --execution-jwt /var/lib/lighthouse/beacon/jwtsecret/secret \
   --metrics \
@@ -26,6 +26,10 @@ CMD="lighthouse bn \
 
 if [ "$ETH_NETWORK" == "goerli" ]; then
     CMD="$CMD --checkpoint-sync-url https://prater.checkpoint.sigp.io"
+fi
+
+if [ "$ETH_NETWORK" == "mainnet" ]; then
+    CMD="$CMD --checkpoint-sync-url https://mainnet.checkpoint.sigp.io"
 fi
 
 if [ -n "$FEE_RECIPIENT" ]; then
