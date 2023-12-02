@@ -11,7 +11,7 @@ CMD="erigon \
   --private.api.addr 0.0.0.0:9090 \
   --datadir /var/lib/erigon \
   --port 30303 \
-  --p2p.allowed-ports 30303,30304,30305 \
+  --p2p.allowed-ports 30303,30304,30302 \
   --torrent.port 42069 \
   --nat any \
   --metrics \
