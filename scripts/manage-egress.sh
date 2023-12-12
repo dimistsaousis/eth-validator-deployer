@@ -2,17 +2,42 @@
 
 # Usage function
 usage() {
-    echo "Usage: $0 --enforce or $0 --disable"
+    echo "Usage: $0 --container <CONTAINER_NAME> (--enforce --rate <RATE_IN_KBIT> | --disable)"
     exit 1
 }
 
 # Check for correct number of arguments
-if [ "$#" -ne 1 ]; then
+if [ "$#" -lt 3 ] || [ "$#" -gt 5 ]; then
     usage
 fi
 
-# The name of your Docker container
-CONTAINER_NAME="execution-container"
+# Initialize variables
+ENFORCE=false
+DISABLE=false
+
+# Parse command line arguments
+while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+        --container)
+            shift
+            CONTAINER_NAME="$1"
+            ;;
+        --enforce)
+            ENFORCE=true
+            ;;
+        --rate)
+            shift
+            RATE="$1"
+            ;;
+        --disable)
+            DISABLE=true
+            ;;
+        *)
+            usage
+            ;;
+    esac
+    shift
+done
 
 # Check if the container is running
 CONTAINER_STATE=$(docker inspect --format '{{.State.Running}}' "$CONTAINER_NAME" 2>/dev/null)
@@ -36,18 +61,14 @@ if [ -z "$VETH" ]; then
 fi
 
 # Apply or remove traffic control based on the flag
-case "$1" in
-    --enforce)
-        # Apply traffic control
-        sudo tc qdisc add dev $VETH root tbf rate 1mbit burst 32kbit latency 400ms
-        echo "Traffic limit enforced on $VETH"
-        ;;
-    --disable)
-        # Remove traffic control
-        sudo tc qdisc del dev $VETH root
-        echo "Traffic limit removed from $VETH"
-        ;;
-    *)
-        usage
-        ;;
-esac
+if [ "$ENFORCE" = true ]; then
+    # Apply traffic control
+    sudo tc qdisc add dev $VETH root tbf rate ${RATE}kbit burst 32kbit latency 400ms
+    echo "Traffic limit enforced on $VETH at ${RATE}kbit/s"
+elif [ "$DISABLE" = true ]; then
+    # Remove traffic control
+    sudo tc qdisc del dev $VETH root
+    echo "Traffic limit removed from $VETH"
+else
+    usage
+fi
