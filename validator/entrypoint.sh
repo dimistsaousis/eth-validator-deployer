@@ -18,7 +18,6 @@ CMD="lighthouse vc \
   --http \
   --http-port 7500 \
   --http-address 0.0.0.0 \
-  --http-allow-origin=* \
   --unencrypted-http-transport"
 
 if [ -n "$FEE_RECIPIENT" ]; then

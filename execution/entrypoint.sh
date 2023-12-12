@@ -13,7 +13,6 @@ CMD="erigon \
   --port 30303 \
   --p2p.allowed-ports 30303,30304,30302 \
   --torrent.port 42069 \
-  --nat any \
   --metrics \
   --metrics.addr 0.0.0.0 \
   --http \
@@ -21,7 +20,6 @@ CMD="erigon \
   --http.port 8545 \
   --http.vhosts=* \
   --http.corsdomain=* \
-  --ws \
   --authrpc.addr 0.0.0.0 \
   --authrpc.port 8551 \
   --authrpc.vhosts=* \
