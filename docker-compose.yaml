@@ -45,7 +45,8 @@ services:
       - 9000:9000/tcp
       - 9000:9000/udp
       - 9005:9005/udp
-      - 5052:5052/tcp
+    expose:
+      - "5052"
     networks:
       default:
         aliases:
@@ -167,8 +168,13 @@ services:
       -${ETH_NETWORK}
       -addr 0.0.0.0:18550
       -relay-check
-      -relays ${MEVBOOST_RELAYS}
-
+      -relay ${FLASH_BOTS_RELAY}
+      -relay ${BLOXROUTE_MAX_PROFIT_RELAY}
+      -relay ${ULTRA_SOUND_RELAY}
+      -relay ${AGNOSTIC_BOOST_RELAY}
+      -relay ${AESTUS_RELAY}
+      -relay ${MANIFOLD_RELAY}
+      -relay ${EDEN_NETWORK_RELAY}
 
 volumes:
   lighthouse-beacon-data:
