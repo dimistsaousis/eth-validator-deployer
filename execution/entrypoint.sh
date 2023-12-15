@@ -24,7 +24,6 @@ CMD="erigon \
   --authrpc.port 8551 \
   --authrpc.vhosts=* \
   --authrpc.jwtsecret /var/lib/erigon/jwtsecret/secret \
-  --maxpeers 100 \
   --db.pagesize 16K"
 
 # Execute the command
