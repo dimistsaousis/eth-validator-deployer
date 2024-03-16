@@ -1,5 +1,11 @@
 version: "3.8"
 
+x-common-logging: &common-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "5"
+
 services:
   execution:
     restart: "unless-stopped"
@@ -29,6 +35,7 @@ services:
     environment:
       - ETH_NETWORK=${ETH_NETWORK}
       - LOG_LEVEL=${LOG_LEVEL}
+    logging: *common-logging
 
   consensus:
     restart: "unless-stopped"
@@ -56,6 +63,7 @@ services:
       - FEE_RECIPIENT=${FEE_RECIPIENT}
       - LOG_LEVEL=${LOG_LEVEL}
       - MEVBOOST_RELAYS=${MEVBOOST_RELAYS}
+    logging: *common-logging
 
   validator:
     restart: "unless-stopped"
@@ -79,6 +87,7 @@ services:
       - FEE_RECIPIENT=${FEE_RECIPIENT}
       - LOG_LEVEL=${LOG_LEVEL}
       - MEVBOOST_RELAYS=${MEVBOOST_RELAYS}
+    logging: *common-logging
 
   metrics-exporter:
     image: samcm/ethereum-metrics-exporter:0.21.0-debian
@@ -91,6 +100,7 @@ services:
       default:
         aliases:
           - metrics-exporter
+    logging: *common-logging
 
   node-exporter:
     image: prom/node-exporter:latest
@@ -108,6 +118,7 @@ services:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /etc/localtime:/etc/localtime:ro
+    logging: *common-logging
 
   blackbox-exporter:
     restart: "unless-stopped"
@@ -116,6 +127,7 @@ services:
       - ./configs/blackbox.yml:/config/blackbox.yml
     command:
       - --config.file=/config/blackbox.yml
+    logging: *common-logging
 
   json-exporter:
     restart: "unless-stopped"
@@ -125,6 +137,7 @@ services:
     command:
       - --config.file
       - /config/json.yml
+    logging: *common-logging
 
   grafana:
     restart: "unless-stopped"
@@ -140,6 +153,7 @@ services:
     ports:
       - "3000:3000"
     command: /run.sh
+    logging: *common-logging
 
   prometheus:
     restart: "unless-stopped"
@@ -150,6 +164,7 @@ services:
       - "9090:9090"
     volumes:
       - prom-data:/prometheus
+    logging: *common-logging
 
   mev-boost:
     restart: "unless-stopped"
@@ -175,6 +190,7 @@ services:
       -relay ${AESTUS_RELAY}
       -relay ${MANIFOLD_RELAY}
       -relay ${EDEN_NETWORK_RELAY}
+    logging: *common-logging
 
 volumes:
   lighthouse-beacon-data:
