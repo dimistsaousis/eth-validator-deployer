@@ -1,17 +1,17 @@
-FROM sigp/lighthouse as builder
+FROM sigp/lighthouse:latest as builder
 
 # **** VALIDATOR ****
 ARG USER=lhvalidator
 ARG UID=10000
 # 1. Create user
 RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    "${USER}"
+        --disabled-password \
+        --gecos "" \
+        --home "/nonexistent" \
+        --shell "/sbin/nologin" \
+        --no-create-home \
+        --uid "${UID}" \
+        "${USER}"
 
 
 # Create data moun
@@ -40,7 +40,7 @@ RUN set -eux; \
         apt-get update; \
         DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install -y gosu ca-certificates tzdata git; \
         rm -rf /var/lib/apt/lists/*; \
-# verify that the binary works
+        # verify that the binary works
         gosu nobody true
 
 USER lhvalidator

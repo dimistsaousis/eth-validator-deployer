@@ -1,4 +1,4 @@
-FROM sigp/lighthouse
+FROM sigp/lighthouse:latest
 
 # **** CONSENSUS ****
 ARG USER=lhconsensus
