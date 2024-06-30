@@ -3,7 +3,7 @@ version: "3.8"
 x-common-logging: &common-logging
   driver: json-file
   options:
-    max-size: "10m"
+    max-size: "100k"
     max-file: "5"
 
 services:
@@ -90,7 +90,7 @@ services:
     logging: *common-logging
 
   metrics-exporter:
-    image: samcm/ethereum-metrics-exporter:0.21.0-debian
+    image: samcm/ethereum-metrics-exporter:0.23.0-debian
     restart: "unless-stopped"
     entrypoint:
       - "/ethereum-metrics-exporter"
@@ -149,7 +149,7 @@ services:
     volumes:
       - grafana-data:/var/lib/grafana
       - grafana-config:/etc/grafana
-    entrypoint: ["provision-dashboards.sh"]
+    entrypoint: [ "provision-dashboards.sh" ]
     ports:
       - "3000:3000"
     command: /run.sh
@@ -180,16 +180,7 @@ services:
       - MEVBOOST_RELAYS=${MEVBOOST_RELAYS}
       - ETH_NETWORK=${ETH_NETWORK}
     command: >
-      -${ETH_NETWORK}
-      -addr 0.0.0.0:18550
-      -relay-check
-      -relay ${FLASH_BOTS_RELAY}
-      -relay ${BLOXROUTE_MAX_PROFIT_RELAY}
-      -relay ${ULTRA_SOUND_RELAY}
-      -relay ${AGNOSTIC_BOOST_RELAY}
-      -relay ${AESTUS_RELAY}
-      -relay ${MANIFOLD_RELAY}
-      -relay ${EDEN_NETWORK_RELAY}
+      -${ETH_NETWORK} -addr 0.0.0.0:18550 -relay-check -relay ${FLASH_BOTS_RELAY} -relay ${BLOXROUTE_MAX_PROFIT_RELAY} -relay ${ULTRA_SOUND_RELAY} -relay ${AGNOSTIC_BOOST_RELAY} -relay ${AESTUS_RELAY} -relay ${MANIFOLD_RELAY} -relay ${EDEN_NETWORK_RELAY}
     logging: *common-logging
 
 volumes:
@@ -200,4 +191,5 @@ volumes:
   grafana-data:
   grafana-config:
   prom-data:
+
 
